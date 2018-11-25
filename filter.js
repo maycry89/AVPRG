@@ -29,7 +29,7 @@ var context = new AudioContext(),
     gain1 = context.createGain(),
     stereoPanner1 = context.createStereoPanner(),
 
-    sample1Intervall,
+    stream1Intervall,
 
     //ab hier referenzen zu grafischen Elementen
     sliders = document.getElementsByClassName("slider"),
@@ -41,6 +41,7 @@ var context = new AudioContext(),
     valueFreqMin = document.getElementById("frequMin");
     valueFreqMax = document.getElementById("frequMax"); 
     stream1isPlaying = false;
+    stream2isPlaying = false;
 
     stream1.connect(gain1);
     gain1.connect(stereoPanner1);
@@ -64,6 +65,7 @@ for (var i = 0; i < sliders.length; i++) {
 selectList.addEventListener("change", function() {
     document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // */Wert aus der Liste: selectList.options[selectList.selectedIndex].value;
     var name = e.target.options[e.target.selectedIndex].value + ".wav";
+    
 //    loadImpulseResponse(name); //Führt Funktion loadImpulseResponse mit der ausgewählten Datei aus
     
     
@@ -132,7 +134,7 @@ modeButtonOne.addEventListener("click", function () {
         
         modeButtonOne.innerHTML = "Play";
     } else {
-        //sample1.play();
+        sample1.play();
         
         modeButtonOne.innerHTML =  "Stop";
     }
@@ -144,9 +146,9 @@ modeButtonOne.addEventListener("click", function () {
 //Testvorgangs Button
 //---Play/Stop Button 2 wird gedrückt
 modeButtonTwo.addEventListener("click", function () {
-    if (stream1isPlaying) { 
-        stream1 = context.createMediaElementSource(sample1),
-        
+    if (stream2isPlaying) { 
+        //stream1 = context.createMediaElementSource(sample1),
+        sample1 = new Audio("sounds/sample1.wav"),
         modeButtonTwo.innerHTML = "Play";
     } else {
         //sample1.play();
@@ -154,13 +156,13 @@ modeButtonTwo.addEventListener("click", function () {
         modeButtonTwo.innerHTML =  "Stop";
     }
 
-    stream1isPlaying = !stream1isPlaying;
+    stream2isPlaying = !stream2isPlaying;
 })
 
 
 
 sample1.addEventListener("ended", function () {
-    isPlaying = false;
+    stream1isPlaying = false;
     playStopButton.innerHTML = "Play All";
 }); 
 
@@ -173,9 +175,10 @@ function checkFunction1() {
         text.style.display = "inline"; 
         //Hier Code Daniel
         
-        sample1Intervall = setInterval(mode1(),200);
+        stream1Intervall = setInterval(mode1(),200);
     } else {
        text.style.display = "none";
+       clearInterval(stream1Intervall);
     }
 }
 
