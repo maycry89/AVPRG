@@ -19,7 +19,14 @@
 //
 
 
-var sliders = document.getElementsByClassName("slider"),
+var context = new AudioContext(),
+    //hierunter audio api elemente
+    sample1 = new Audio("sounds/sample1.wav") // Name der File datei bitte überprüfen und anpassen.
+    sample2 = new Audio("sounds/sample2.wav") // s.o
+    sample3 = new Audio("sounds/sample3.wav") // s.o
+
+    //ab hier referenzen zu grafischen Elementen
+    sliders = document.getElementsByClassName("slider"),
     playStopButton = document.getElementById("playStopButton1"), 
     playStopButton2 = document.getElementById("playStopButton2"),
     playStopButton3 = document.getElementById("playStopButton3"), 
