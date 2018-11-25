@@ -5,7 +5,7 @@ html, body {
     color: #d8d6c2;
 }
 
-#playStopButton {
+#playStopButtonOne {
     background-color: #577be0;
     border: none;
     color: #fdfdfd;
@@ -15,7 +15,7 @@ html, body {
     padding: 0.5em 1.5em;
 }
 
-#playStopButton:active {
+#playStopButtonOne:active {
    background: #7eaafc;
 }
 

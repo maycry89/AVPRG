@@ -21,19 +21,19 @@
 
 var context = new AudioContext(),
     //hierunter audio api elemente
-    var sample1 = new Audio(sounds/sample1.wav),
+    sample1 = new Audio("sounds/sample1.wav"),
     //var sample2 = new Audio(sounds/sample2.wav),
     //var sample2 = new Audio(sounds/sample2.wav),
 
-    var stream1 = context.createMediaElementSource(sample1),
-    var gain1 = context.createGain(),
-    var stereoPanner1 = context.createStereoPanner(),
+    stream1 = context.createMediaElementSource(sample1),
+    gain1 = context.createGain(),
+    stereoPanner1 = context.createStereoPanner(),
 
     //ab hier referenzen zu grafischen Elementen
     sliders = document.getElementsByClassName("slider"),
-    modeButton1 = document.getElementById("playStopButton1"), 
-    modeButton2 = document.getElementById("playStopButton2"),
-    modeButton3 = document.getElementById("playStopButton3"), 
+    modeButtonOne = document.getElementById("playStopButtonOne"), 
+    modeButton2 = document.getElementById("playStopButtonTwo"),
+    modeButton3 = document.getElementById("playStopButtonThree"), 
     submitButton = document.getElementById("submitBtn"),
     selectList =document.getElementById("selectList"), 
     valueFreqMin = document.getElementById("frequMin");
@@ -94,25 +94,25 @@ function changeParameter() {
 }
 
 //---Play/Stop Button wird gedrückt
-modeButton1.addEventListener("click", function () {
+modeButtonOne.addEventListener("click", function () {
     if (stream1isPlaying) { 
         //sound.pause(); 
         
-        modeButton1.innerHTML = "Play All";
+        modeButtonOne.innerHTML = "Play";
     } else {
         sample1.play();
-        modeButton1.innerHTML = "Stop All";
+        modeButtonOne.innerHTML = "Stop";
     }
 
     stream1isPlaying = !stream1isPlaying;
 })
 
-/*
-sound.addEventListener("ended", function () {
+
+sample1.addEventListener("ended", function () {
     isPlaying = false;
     playStopButton.innerHTML = "Play All";
 }); 
-*/
+
 
 //Lässt das "active" Textfeld erscheinen wenn Checkbox aktiviert ist
 function checkFunction() {
