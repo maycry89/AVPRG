@@ -179,7 +179,7 @@ function checkFunction1() {
         text.style.display = "inline"; 
         //Hier Code Daniel
         
-        stream1Intervall = setInterval(mode1,200);
+        stream1Intervall = setInterval(mode1(),200);
     } else {
        text.style.display = "none";
        clearInterval(stream1Intervall);
