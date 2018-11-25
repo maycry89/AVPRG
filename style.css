@@ -1,0 +1,110 @@
+html, body {
+    padding: 0; margin: 0;
+    text-align: center;
+    background: #141547;
+    color: #d8d6c2;
+}
+
+#playStopButton {
+    background-color: #577be0;
+    border: none;
+    color: #fdfdfd;
+    font-size: 1.5em;
+    width:180px;
+    margin-right: 10%;
+    padding: 0.5em 1.5em;
+}
+
+#playStopButton:active {
+   background: #7eaafc;
+}
+
+div {
+    padding :10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
+}
+
+#functionContainer {
+    background: #3244a7;
+    width: 85%;
+    border-style: solid;
+    border-color: #161d44;
+}
+
+
+#samplesContainer {
+    background: #b18df5;
+    width: 85%;
+    border-style: solid;
+    border-color: #161d44;
+}
+
+#selectList {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: 0.8em;
+}
+
+.slider {
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #000000;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #303bc3;
+    cursor: pointer;
+}
+
+
+    
+/*Kommentar*/
+#controllContainer {
+    position: fixed;
+    margin-left: 50%;
+    height: 100%;
+    width: 50%;
+    text-align: center;
+    overflow: auto;
+    
+}
+
+#visualContainer {
+    margin: 0;
+    padding: 0;
+    width: 50%;
+    background-color: #141547;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    
+}
+#moveContainer {
+    margin-top: 20px;
+    margin-left: 15%; /*   100 / 2 - 20% /2 = 100/2 = 50-20= 30/2 = 15  */
+    padding: 0;
+    width: 20%;
+    background-color: #ffffff;
+    position: fixed; 
+    overflow: auto;
+}
+
+
+
+

@@ -1,10 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        
+        <title>AVPRG Aufgabe 9</title>
+    </head>
+    <body>
+        
+        <!-- Hier kommt der visuelle Screen hin-->
+        <div id="visualContainer">
+            <div id="moveContainer">
+               <!-- Doppelter output nicht möglich -->
+               <span id="detuneDivContainerOutput" class="output">test</span>
+               <span id="selectedListOutput" class="output">test</span>
+            </div> 
+           
+        </div>  
+       
 
-    
-<!-- Kommentar -->
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
-<p>This is a Testrange</p>
+        <div id="controllContainer">
+            <!----------------- Samples --------------------->
+            <div id="samplesContainer">Samples
+                <select id="selectList">
+                    <option value="sample1">Sample1</option>
+                    <option value="sample2">Sample2</option>
+                    <option value="sample3">Sample3</option>                   
+                </select>
+                <!----------------- Checkbox --------------------->
+                <input type="checkbox" id="checkMusic" onclick="checkFunction()"> 
+                <pspan id="text" style="display:none">active</span>
+            </div>
+        
+            
+            <div id="functionContainer">Frequency 
+                <span id="frequencyOutput" class="output">Hz</span>
+                <input type="range" min="20" max="20000" value="1000" class="slider" id="frequencySlider">
+                Min: <input type="text" id="frequMin" value="20 ">
+                Max: <input type="text" id="frequMax" value="20000">
+                <span id="frequencyOutput" class="output">1000 Hz</span> 
 
-</body>
+                <button id="submitBtn">Submit</button> <!--btn Submit--->
+             
+            </div>
+            <div id="functionContainer">Detune
+                <input type="range" min="0" max="10" value="0" class="slider" id="detuneSlider">
+                <span id="detuneOutput" class="output">0 cents</span>
+            </div>
+            
+            <button id="playStopButton">Play1</button><!--btn Submit--->
+            <button id="playStopButton">Play2</button><!--btn Submit--->
+            <button id="playStopButton">Play3</button><!--btn Submit--->
+
+            <script src="filter.js"></script>
+                <!-------------------------------------->
+        </div>
+    </body>
 </html>
-
