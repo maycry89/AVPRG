@@ -148,11 +148,11 @@ modeButtonOne.addEventListener("click", function () {
 modeButtonTwo.addEventListener("click", function () {
     if (stream2isPlaying) { 
         //stream1 = context.createMediaElementSource(sample1),
-        sample1 = new Audio("sounds/sample1.wav"),
+        sample1 = new Audio("sounds/sample2.wav"),
         modeButtonTwo.innerHTML = "Play";
     } else {
         //sample1.play();
-        
+        sample1 = new Audio("sounds/sample1.wav"),
         modeButtonTwo.innerHTML =  "Stop";
     }
 
