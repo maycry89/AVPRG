@@ -21,8 +21,13 @@
 
 var context = new AudioContext(),
     //hierunter audio api elemente
-    sample1, sample2, sample3,
-    audioSourceBuffer = [sample1, sample2, sample3],
+    var sample1 = new Audio(sounds/sample1.wav),
+    //var sample2 = new Audio(sounds/sample2.wav),
+    //var sample2 = new Audio(sounds/sample2.wav),
+
+    var stream1 = context.createMediaElementSource(sample1),
+    var gain1 = context.createGain(),
+    var stereoPanner1 = context.createStereoPanner(),
 
     //ab hier referenzen zu grafischen Elementen
     sliders = document.getElementsByClassName("slider"),
@@ -34,6 +39,10 @@ var context = new AudioContext(),
     valueFreqMin = document.getElementById("frequMin");
     valueFreqMax = document.getElementById("frequMax"); 
     stream1isPlaying = false;
+
+    stream1.connect(gain1);
+    gain1.connect(stereoPanner1);
+    stereoPanner1.connect(context.destination);
 /*   
     sound = new Audio("../sounds/sound.wav"),
     source = context.createMediaElementSource(sound),
@@ -88,9 +97,10 @@ function changeParameter() {
 modeButton1.addEventListener("click", function () {
     if (stream1isPlaying) { 
         //sound.pause(); 
+        
         modeButton1.innerHTML = "Play All";
     } else {
-        setInterval(playSounds("sample1"),200);
+        sample1.play();
         modeButton1.innerHTML = "Stop All";
     }
 
@@ -123,6 +133,11 @@ submitButton.addEventListener("click", function () {
 
 //DANIEL TEIL -------------------------------------------------------------------------------------------
 
+function mode1(){
+    
+}
+
+/*
 function getData(i) {
     var request = new XMLHttpRequest();
     request.open('GET',  "../sounds/sample" + (i + 1) + ".wav", true);
@@ -143,3 +158,11 @@ function playSounds(i){
     getData(i);
     sourceBuffers[i].start(0);
 }
+
+function playSounds(buffer, time) {
+    var source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    source.start(time);
+}
+*/
