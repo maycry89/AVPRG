@@ -58,8 +58,10 @@ for (var i = 0; i < sliders.length; i++) {
     sliders[i].addEventListener("mousemove", changeParameter);
 }
 /*Auswahl der Dateien im DropDown Menü*/ 
-selectList.addEventListener("change", function() {
+selectList.addEventListener("change", function (e) {                                                                                                                                                                                                                                                                        
+    var name = e.target.options[e.target.selectedIndex].value; //Übernimmt das Element aus der DropDownListe als name                                                                                                                                                                            
     document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // */Wert aus der Liste: selectList.options[selectList.selectedIndex].value;
+    loadImpulseResponse(name); //Führt Funktion loadImpulseResponse mit der ausgewählten Datei aus
 });
 
 /*
@@ -67,6 +69,26 @@ selectList.addEventListener("change", function() {
     //filter.type = selectList.options[selectList.selectedIndex].value;
 });
 */
+
+function loadImpulseResponse(name) {
+    var request = new XMLHttpRequest();
+    request.open("GET",  ("../sounds/impulseResponses/" + name + ".wav"), true);
+    request.responseType = "arraybuffer";
+
+    request.onload = function () {
+        var undecodedAudio = request.response;
+        context.decodeAudioData(undecodedAudio, function (buffer) {
+            if (convolver) {convolver.disconnect(); }
+            convolver = context.createConvolver();
+            convolver.buffer = buffer;
+            convolver.normalize = true;
+
+            source.connect(convolver);
+            convolver.connect(context.destination);
+        });
+    };
+    request.send();
+}
 
 function changeParameter() {
 
@@ -94,13 +116,14 @@ function changeParameter() {
 }
 
 //---Play/Stop Button wird gedrückt
-modeButton1.addEventListener("click", function () {
+modeButton1_1.addEventListener("click", function () {
     if (sample1isPlaying) { 
-        //sound.pause(); 
-        modeButton1.innerHTML = "Play All";
+        sound.pause(); 
+        modeButton1_1.innerHTML = "Play All";
     } else {
-        setInterval(playSounds("sample1"),200);
-        modeButton1.innerHTML = "Stop All";
+        sound.play();
+       // setInterval(playSounds("sample1"),200);
+       modeButton1_1.innerHTML = "Stop All";
     }
 
     sample1isPlaying = !sample1isPlaying;
