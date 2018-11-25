@@ -24,16 +24,17 @@ var context = new AudioContext(),
     sample1, sample2, sample3,
     audioSourceBuffer = [sample1, sample2, sample3],
 
+
     //ab hier referenzen zu grafischen Elementen
     sliders = document.getElementsByClassName("slider"),
-    modeButton1 = document.getElementById("playStopButton1"), 
-    modeButton2 = document.getElementById("playStopButton2"),
-    modeButton3 = document.getElementById("playStopButton3"), 
+    modeButton1_1 = document.getElementById("playStopButton1"), 
+    modeButton1_2 = document.getElementById("playStopButton2"),
+    modeButton1_3 = document.getElementById("playStopButton3"), 
     submitButton = document.getElementById("submitBtn"),
     selectList =document.getElementById("selectList"), 
     valueFreqMin = document.getElementById("frequMin");
     valueFreqMax = document.getElementById("frequMax"); 
-    isPlaying = false;
+    sample1isPlaying = false;
 /*   
     sound = new Audio("../sounds/sound.wav"),
     source = context.createMediaElementSource(sound),
@@ -86,7 +87,7 @@ function changeParameter() {
 
 //---Play/Stop Button wird gedrückt
 modeButton1.addEventListener("click", function () {
-    if (isPlaying) { 
+    if (sample1isPlaying) { 
         //sound.pause(); 
         modeButton1.innerHTML = "Play All";
     } else {
@@ -94,7 +95,7 @@ modeButton1.addEventListener("click", function () {
         modeButton1.innerHTML = "Stop All";
     }
 
-    isPlaying = !isPlaying;
+    sample1isPlaying = !sample1isPlaying;
 })
 
 /*
