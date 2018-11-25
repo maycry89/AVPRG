@@ -18,20 +18,28 @@
 //Button nameBtn
 //
 
+var context = new AudioContext();
+var sound = new Audio("../sounds/sample1.wav");
+var source = context.createMediaElementSource(sound);
+var convolver = context.createConvolver();
+var isPlaying = false;
+sound.loop = true;
 
+loadImpulseResponse("sample1");
+/*
 var context = new AudioContext(),
     //hierunter audio api elemente
     sample1, sample2, sample3,
     audioSourceBuffer = [sample1, sample2, sample3],
 
-
+*/
     //ab hier referenzen zu grafischen Elementen
     sliders = document.getElementsByClassName("slider"),
     modeButton1_1 = document.getElementById("playStopButton1"), 
     modeButton1_2 = document.getElementById("playStopButton2"),
     modeButton1_3 = document.getElementById("playStopButton3"), 
     submitButton = document.getElementById("submitBtn"),
-    selectList =document.getElementById("selectList"), 
+    selectList = document.getElementById("selectList"), 
     valueFreqMin = document.getElementById("frequMin");
     valueFreqMax = document.getElementById("frequMax"); 
     sample1isPlaying = false;
@@ -49,7 +57,7 @@ filter.connect(context.destination);
 for (var i = 0; i < sliders.length; i++) {
     sliders[i].addEventListener("mousemove", changeParameter);
 }
-
+/*Auswahl der Dateien im DropDown Menü*/ 
 selectList.addEventListener("change", function() {
     document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // */Wert aus der Liste: selectList.options[selectList.selectedIndex].value;
 });
