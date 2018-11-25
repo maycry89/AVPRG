@@ -21,15 +21,14 @@
 
 var context = new AudioContext(),
     //hierunter audio api elemente
-    sample1 = new Audio("sounds/sample1.wav") // Name der File datei bitte überprüfen und anpassen.
-    sample2 = new Audio("sounds/sample2.wav") // s.o
-    sample3 = new Audio("sounds/sample3.wav") // s.o
+    sample1, sample2, sample3,
+    audioSourceBuffer = [sample1, sample2, sample3],
 
     //ab hier referenzen zu grafischen Elementen
     sliders = document.getElementsByClassName("slider"),
-    playStopButton = document.getElementById("playStopButton1"), 
-    playStopButton2 = document.getElementById("playStopButton2"),
-    playStopButton3 = document.getElementById("playStopButton3"), 
+    modeButton1 = document.getElementById("playStopButton1"), 
+    modeButton2 = document.getElementById("playStopButton2"),
+    modeButton3 = document.getElementById("playStopButton3"), 
     submitButton = document.getElementById("submitBtn"),
     selectList =document.getElementById("selectList"), 
     valueFreqMin = document.getElementById("frequMin");
@@ -86,13 +85,13 @@ function changeParameter() {
 }
 
 //---Play/Stop Button wird gedrückt
-playStopButton1.addEventListener("click", function () {
+modeButton1.addEventListener("click", function () {
     if (isPlaying) { 
         //sound.pause(); 
-        playStopButton1.innerHTML = "Play All";
+        modeButton1.innerHTML = "Play All";
     } else {
-        //sound.play();
-        playStopButton1.innerHTML = "Stop All";
+        setInterval(playSounds("sample1"),200);
+        modeButton1.innerHTML = "Stop All";
     }
 
     isPlaying = !isPlaying;
@@ -122,4 +121,25 @@ submitButton.addEventListener("click", function () {
     document.getElementById("frequencySlider").max = valueFreqMax.value;
 })
 
-//DANIEL TEIL
+//DANIEL TEIL -------------------------------------------------------------------------------------------
+
+function getData(i) {
+    var request = new XMLHttpRequest();
+    request.open('GET',  "../sounds/sample" + (i + 1) + ".wav", true);
+    request.responseType = 'arraybuffer';
+    request.onload = function () {
+        var undecodedAudio = request.response;
+
+        context.decodeAudioData(undecodedAudio, function (buffer) {
+            sourceBuffers[i] = context.createBufferSource();
+            sourceBuffers[i].buffer = buffer;
+            sourceBuffers[i].connect(context.destination);
+        });
+    };
+    request.send();
+}
+
+function playSounds(i){
+    getData(i);
+    sourceBuffers[i].start(0);
+}
