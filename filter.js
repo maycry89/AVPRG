@@ -39,7 +39,7 @@ var context = new AudioContext(),
     modeButton3 = document.getElementById("playStopButtonThree"), 
     submitButton = document.getElementById("submitBtn"),
     selectList =document.getElementById("selectList"), 
-    valueFreqMin = document.getElementById("frequMin");
+    valueFreqMin = document.getElementById("frequMin"),
     valueFreqMax = document.getElementById("frequMax"); 
     stream1isPlaying = false;
     stream2isPlaying = false;
@@ -64,10 +64,10 @@ for (var i = 0; i < sliders.length; i++) {
 }
 
 selectList.addEventListener("change", function() {
-    document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // */Wert aus der Liste: selectList.options[selectList.selectedIndex].value;
-    var name = e.target.options[e.target.selectedIndex].value + ".wav";
- //   sample1 = new Audio(name);
-    sample1 = new Audio("sounds/sample2.wav");
+    var name = selectList.options[selectList.selectedIndex].value;
+    document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // */Wert aus der Liste: selectList.options[selectList.selectedIndex].value;   
+    sample1 = new Audio("sounds/" + name + ".wav");
+ //   sample1 = new Audio("sounds/sample2.wav");
 //    loadImpulseResponse(name); //Führt Funktion loadImpulseResponse mit der ausgewählten Datei aus
         
 });
@@ -137,7 +137,7 @@ modeButtonOne.addEventListener("click", function () {
     } else {
         sample1.play();
         
-        modeButtonOne.innerHTML =  "Stop";
+        modeButtonOne.innerHTML = "Stop";
     }
 
     stream1isPlaying = !stream1isPlaying;
@@ -150,11 +150,11 @@ modeButtonTwo.addEventListener("click", function () {
 
     if (stream2isPlaying) { 
         //stream1 = context.createMediaElementSource(sample1),
-        sample1 = new Audio("sounds/sample2.wav"),
+        sample1 = new Audio("sounds/sample1.wav"),
         modeButtonTwo.innerHTML = "Play";
     } else {
         //sample1.play();
-        sample1 = new Audio("sounds/sample1.wav"),
+        sample1 = new Audio("sounds/sample2.wav"),
         modeButtonTwo.innerHTML =  "Stop";
     }
 
@@ -162,10 +162,10 @@ modeButtonTwo.addEventListener("click", function () {
 })
 
 
-
-sample1.addEventListener("ended", function () {
+// Funktion wird später ausgebaut
+sample1.addEventListener("ended", function () { //[Nati: function neu einzeln machen und weiter oben erneut aufrufen]
     stream1isPlaying = false;
-    playStopButton.innerHTML = "Play All";
+    modeButtonOne.innerHTML = "Play";
 }); 
 
 
