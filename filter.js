@@ -33,7 +33,7 @@ var context = new AudioContext(),
     selectList =document.getElementById("selectList"), 
     valueFreqMin = document.getElementById("frequMin");
     valueFreqMax = document.getElementById("frequMax"); 
-    isPlaying = false;
+    stream1isPlaying = false;
 /*   
     sound = new Audio("../sounds/sound.wav"),
     source = context.createMediaElementSource(sound),
@@ -86,7 +86,7 @@ function changeParameter() {
 
 //---Play/Stop Button wird gedrückt
 modeButton1.addEventListener("click", function () {
-    if (isPlaying) { 
+    if (stream1isPlaying) { 
         //sound.pause(); 
         modeButton1.innerHTML = "Play All";
     } else {
@@ -94,7 +94,7 @@ modeButton1.addEventListener("click", function () {
         modeButton1.innerHTML = "Stop All";
     }
 
-    isPlaying = !isPlaying;
+    stream1isPlaying = !stream1isPlaying;
 })
 
 /*
