@@ -32,6 +32,7 @@ var context = new AudioContext(),
     stream1Intervall,
 
     //ab hier referenzen zu grafischen Elementen
+    
     sliders = document.getElementsByClassName("slider"),
     modeButtonOne = document.getElementById("playStopButtonOne"), 
     modeButtonTwo = document.getElementById("playStopButtonTwo"),
@@ -65,10 +66,10 @@ for (var i = 0; i < sliders.length; i++) {
 selectList.addEventListener("change", function() {
     document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // */Wert aus der Liste: selectList.options[selectList.selectedIndex].value;
     var name = e.target.options[e.target.selectedIndex].value + ".wav";
-    
+ //   sample1 = new Audio(name);
+    sample1 = new Audio("sounds/sample2.wav");
 //    loadImpulseResponse(name); //Führt Funktion loadImpulseResponse mit der ausgewählten Datei aus
-    
-    
+        
 });
 
 
@@ -130,7 +131,7 @@ function changeParameter() {
 //---Play/Stop Button wird gedrückt
 modeButtonOne.addEventListener("click", function () {
     if (stream1isPlaying) { 
-        //sound.pause(); 
+        sample1.pause(); 
         
         modeButtonOne.innerHTML = "Play";
     } else {
@@ -143,9 +144,10 @@ modeButtonOne.addEventListener("click", function () {
 })
 
 
-//Testvorgangs Button
+//Testvorgangs Button FUNZT
 //---Play/Stop Button 2 wird gedrückt
 modeButtonTwo.addEventListener("click", function () {
+
     if (stream2isPlaying) { 
         //stream1 = context.createMediaElementSource(sample1),
         sample1 = new Audio("sounds/sample2.wav"),
@@ -168,10 +170,12 @@ sample1.addEventListener("ended", function () {
 
 
 //Lässt das "active" Textfeld erscheinen wenn Checkbox aktiviert ist
+//checkbox1.addEventListener("onclick", checkFunction1);
+    
 function checkFunction1() {
-    var checkBox = document.getElementById("checkMusic");
+    var checkBox1 = document.getElementById("checkMusic");
     var text = document.getElementById("text");
-    if (checkBox.checked == true){ //Wenn Checkbox aktiv ist
+    if (checkBox1.checked == true){ //Wenn Checkbox aktiv ist
         text.style.display = "inline"; 
         //Hier Code Daniel
         
