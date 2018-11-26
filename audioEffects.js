@@ -37,12 +37,14 @@ var context = new AudioContext(),
     source1, source2, source3, 
     sourceBuffers = [source1, source2, source3],
 
+    mode1changer1 = 200,
+
     //ab hier referenzen zu grafischen Elementen
     
     sliders = document.getElementsByClassName("slider"),
     modeButtonOne = document.getElementById("playStopButtonOne"), 
     modeButtonTwo = document.getElementById("playStopButtonTwo"),
-    modeButton3 = document.getElementById("playStopButtonThree"), 
+    modeButtonThree = document.getElementById("playStopButtonThree"), 
     submitButton = document.getElementById("submitBtn"),
     selectList =document.getElementById("selectList"), 
     valueFreqMin = document.getElementById("frequMin"),
@@ -63,10 +65,10 @@ var context = new AudioContext(),
     
 
 
-
+    // WIP FINGER WEG buffer node stuff
     function getData(i) {
         var request = new XMLHttpRequest();
-        request.open('GET',  "../sounds/drumsounds/sound" + (i + 1) + ".wav", true);
+        request.open('GET',  "sounds/" + (i + 1) + ".wav", true);
         request.responseType = 'arraybuffer';
         request.onload = function () {
             var undecodedAudio = request.response;
@@ -88,11 +90,13 @@ var context = new AudioContext(),
 for (var i = 0; i < sliders.length; i++) {
     sliders[i].addEventListener("mousemove", changeParameter);
 }
-
+/* DropDownMenü */
 selectList.addEventListener("change", function() {
     var name = selectList.options[selectList.selectedIndex].value;
     document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // */Wert aus der Liste: selectList.options[selectList.selectedIndex].value;   
     sample1 = new Audio("sounds/" + name + ".wav");
+    stream1 = context.createMediaElementSource(sample1);
+    stream1.connect(gain1);
  //   sample1 = new Audio("sounds/sample2.wav");
 //    loadImpulseResponse(name); //Führt Funktion loadImpulseResponse mit der ausgewählten Datei aus
         
@@ -100,7 +104,7 @@ selectList.addEventListener("change", function() {
 
 
 
-/*
+/*  ++++++++++++++++++Kann gelöscht werden +++++++++++++++
 function loadImpulseResponse(name) {
     var request = new XMLHttpRequest();
     request.open("GET",  ("../sounds/impulseResponses/" + name + ".wav"), true);
@@ -122,12 +126,6 @@ function loadImpulseResponse(name) {
 }
 */
 
-
-/*
-selectList.addEventListener("change", function() {
-    //filter.type = selectList.options[selectList.selectedIndex].value;
-});
-*/
 
 function changeParameter() {
 
@@ -164,7 +162,6 @@ modeButtonOne.addEventListener("click", function () {
     } else {
         //sample1.play();
         waveShaper1.curve = makeDistortionCurve(400);
-
         modeButtonOne.innerHTML = "Stop";
     }
 
@@ -224,6 +221,13 @@ submitButton.addEventListener("click", function () {
 
 function mode1(){
     sample1.play();
+    if(waveShaper1.curve != null){
+        mode1changer1 += 100;
+        if(mode1changer1 > 800){
+            mode1changer1 = 200;
+        }
+        waveShaper1.curve = makeDistortionCurve(mode1changer1);
+    }
     //Alternative hier
     //playSound(1);
     /*
@@ -302,22 +306,22 @@ function playSounds(buffer, time) {
 
 
 
-/*************************************************  Visual Effects **********/
+/**Nati Teil: ***********************************************  Visual Effects ***********************/
 
-modeButtonThree = document.getElementById("playStopButtonThree"), 
-streamisPlaying = false;
+/**Button Three */
 
-
-//---Play/Stop Button wird gedrückt
+var isPlaying = false;
 modeButtonThree.addEventListener("click", function () {
-if (streamisPlaying) {            
+if (isPlaying) {            
     modeButtonThree.innerHTML = "Play";
+    
 } else {       
     modeButtonThree.innerHTML = "Stop";
+    sample1.play();
 }
-
-streamisPlaying = !streamisPlaying;
+isPlaying = !isPlaying;
 });
+
 
 /* CANVAS */
 window.onload = function(){
@@ -331,14 +335,21 @@ window.onload = function(){
     
     var posX = 50;
     var posY = 50;
+    var plusMinus = 1;
+    var curveCos;
     setInterval(function(){
 
-        posX += 1;
+        posX += plusMinus;
         posY += 1;
+        curveCos = Math.cos(posX)
 
+        if (posX >= 350 || posX <= 30){
+            plusMinus *= -1;
+        }
         
 
-        document.getElementById("moveCycle").innerHTML = Math.cos(posY) + " pos: " + posY ; 
+
+        document.getElementById("moveCycle").innerHTML = curveCos + " pos: " + posX ; 
         c.fillStyle = "rgba(0,0,0,0.03)";
         c.fillRect(0,0, canvas.width, canvas.height);
 
