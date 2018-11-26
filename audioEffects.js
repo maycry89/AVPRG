@@ -25,6 +25,9 @@ var context = new AudioContext(),
     //var sample2 = new Audio(sounds/sample2.wav),
     //var sample2 = new Audio(sounds/sample2.wav),
 
+
+    request = new XMLHttpRequest(),
+
     stream1 = context.createMediaElementSource(sample1),
     gain1 = context.createGain(),
     stereoPanner1 = context.createStereoPanner(),
@@ -47,6 +50,13 @@ var context = new AudioContext(),
     stream1.connect(gain1);
     gain1.connect(stereoPanner1);
     stereoPanner1.connect(context.destination);
+
+    request.open('GET', "sounds/sample1.wav");
+    request.responseType = 'arraybuffer';
+    
+    
+    
+
 /*   
     sound = new Audio("../sounds/sound.wav"),
     source = context.createMediaElementSource(sound),
@@ -137,7 +147,7 @@ modeButtonOne.addEventListener("click", function () {
         modeButtonOne.innerHTML = "Play";
     } else {
         sample1.play();
-        
+
         modeButtonOne.innerHTML = "Stop";
     }
 
@@ -197,6 +207,15 @@ submitButton.addEventListener("click", function () {
 
 function mode1(){
     sample1.play();
+    //Alternative hier
+    var undecodedAudio = request.response;
+    context.decodeAudioData(undecodedAudio, function (buffer)){
+        var sourceBuffer = context.createBufferSource();
+        sourceBuffer.connect(context.destination);
+        sourceBuffer.start(context.currentTime);
+    });
+
+    request.send();
 }
 
 /*
