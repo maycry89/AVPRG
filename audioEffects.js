@@ -211,6 +211,7 @@ function mode1(){
     var undecodedAudio = request.response;
     context.decodeAudioData(undecodedAudio, function (buffer){
         var sourceBuffer = context.createBufferSource();
+        sourceBuffer.buffer = buffer;
         sourceBuffer.connect(context.destination);
         sourceBuffer.start(context.currentTime);
     });
