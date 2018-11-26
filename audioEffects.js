@@ -31,8 +31,11 @@ var context = new AudioContext(),
     stream1 = context.createMediaElementSource(sample1),
     gain1 = context.createGain(),
     stereoPanner1 = context.createStereoPanner(),
+    waveShaper1 = context.createWaveShaper(),
 
     stream1Intervall,
+    source1, source2, source3, 
+    sourceBuffers = [source1, source2, source3],
 
     //ab hier referenzen zu grafischen Elementen
     
@@ -47,28 +50,40 @@ var context = new AudioContext(),
     stream1isPlaying = false;
     stream2isPlaying = false;
 
+    // Hier werden die nodes zusammen gesetzt
     stream1.connect(gain1);
-    gain1.connect(stereoPanner1);
+    gain1.connect(waveShaper1);
+    waveShaper1.connect(stereoPanner1);
     stereoPanner1.connect(context.destination);
+
 
     request.open('GET', "sounds/sample1.wav");
     request.responseType = 'arraybuffer';
     
     
+
+
+
+    function getData(i) {
+        var request = new XMLHttpRequest();
+        request.open('GET',  "../sounds/drumsounds/sound" + (i + 1) + ".wav", true);
+        request.responseType = 'arraybuffer';
+        request.onload = function () {
+            var undecodedAudio = request.response;
     
+            context.decodeAudioData(undecodedAudio, function (buffer) {
+                sourceBuffers[i] = context.createBufferSource();
+                sourceBuffers[i].buffer = buffer;
+                sourceBuffers[i].connect(context.destination);
+            });
+        };
+        request.send();
+    }
 
-/*   
-    sound = new Audio("../sounds/sound.wav"),
-    source = context.createMediaElementSource(sound),
-    filter = context.createBiquadFilter();
-
-sound.loop = true;
-source.connect(filter);
-filter.connect(context.destination);
-
-*/
-
-// loadImpulseResponse("sample1")
+    function playSound(i) {
+        getData(i);
+        sourceBuffers[i].start(0);
+    }
 
 for (var i = 0; i < sliders.length; i++) {
     sliders[i].addEventListener("mousemove", changeParameter);
@@ -143,11 +158,12 @@ function changeParameter() {
 //---Play/Stop Button wird gedrückt
 modeButtonOne.addEventListener("click", function () {
     if (stream1isPlaying) { 
-        sample1.pause(); 
-        
+        //sample1.pause(); 
+        waveShaper1.curve = null;
         modeButtonOne.innerHTML = "Play";
     } else {
-        sample1.play();
+        //sample1.play();
+        waveShaper1.curve = makeDistortionCurve(400);
 
         modeButtonOne.innerHTML = "Stop";
     }
@@ -175,11 +191,11 @@ modeButtonTwo.addEventListener("click", function () {
 
 
 // Funktion wird später ausgebaut
-sample1.addEventListener("ended", function () { //[Nati: function neu einzeln machen und weiter oben erneut aufrufen]
+/*sample1.addEventListener("ended", function () { //[Nati: function neu einzeln machen und weiter oben erneut aufrufen]
     stream1isPlaying = false;
     modeButtonOne.innerHTML = "Play";
 }); 
-
+*/
 
 //Lässt das "active" Textfeld erscheinen wenn Checkbox aktiviert ist
 //checkbox1.addEventListener("onclick", checkFunction1);
@@ -191,7 +207,7 @@ function checkFunction1() {
         text.style.display = "inline"; 
         //Hier Code Daniel
         
-        stream1Intervall = setInterval(mode1,200);
+        stream1Intervall = setInterval(mode1,500);
     } else {
        text.style.display = "none";
        clearInterval(stream1Intervall);
@@ -207,8 +223,10 @@ submitButton.addEventListener("click", function () {
 //DANIEL TEIL -------------------------------------------------------------------------------------------
 
 function mode1(){
-    //sample1.play();
+    sample1.play();
     //Alternative hier
+    //playSound(1);
+    /*
     var undecodedAudio = request.response;
     context.decodeAudioData(undecodedAudio, function (buffer){
         var sourceBuffer = context.createBufferSource();
@@ -218,7 +236,22 @@ function mode1(){
     });
 
     request.send();
+    */
 }
+
+function makeDistortionCurve(amount) {
+    var k = typeof amount === 'number' ? amount : 50,
+      n_samples = 44100,
+      curve = new Float32Array(n_samples),
+      deg = Math.PI / 180,
+      i = 0,
+      x;
+    for ( ; i < n_samples; ++i ) {
+      x = i * 2 / n_samples - 1;
+      curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
+    }
+    return curve;
+  };
 
 /*
 function getData(i) {
