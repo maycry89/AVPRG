@@ -8,14 +8,15 @@
     <body>
         
         <!-- Visueller Screen -->
-        <div id="visualContainer">
-            <canvas id="paper" width="400" height="400"></canvas>
+        <div id="moveContainer">
+            
 
-            <div id="moveContainer">
-               <!-- Doppelter output nicht möglich -->
-               <span id="detuneDivContainerOutput" class="output">test</span>
-               <span id="selectedListOutput" class="output">test</span>
-               <span id="moveCycle" class="output">test</span>
+            <div id="visualContainer">
+                <canvas id="paper" width="500" height="250"></canvas>
+               <!-- Doppelter output nicht möglich 
+                <span id="detuneDivContainerOutput" class="output"></span>
+            //  <span id="selectedListOutput" class="output"></span>
+            //  <span id="moveCycle" class="output"></span> -->
             </div> 
            
         </div>  
@@ -30,8 +31,9 @@
                     <option value="sample3">Sample3</option>                   
                 </select>
                 <!----------------- Checkbox --------------------->
-                <input type="checkbox" id="checkMusic" onclick="checkFunction1()"> 
-                <span id="text" style="display:none">active</span>
+                <input type="checkbox" id="checkMusic" onclick="checkFunction1()">
+                <button id="playStopButton" >Off</button> 
+                <span id="text" >off</span>
             </div>
                    
             <div id="functionContainer">Gain
@@ -43,14 +45,14 @@
                 <button id="submitBtn">Submit</button> <!--btn Submit--->           
             </div>
 
-            <div id="functionContainer">Detune
+            <div id="functionContainer">Move
                 <input type="range" min="0" max="10" value="0" class="slider" id="detuneSlider">
-                <span id="detuneOutput" class="output">0 cents</span>
+                <span id="detuneOutput" class="output"></span>
             </div>
             
-                <button id="playStopButtonOne">Play1</button><!--btn Submit--->
-                <button id="playStopButtonTwo">Play2</button><!--btn Submit--->
-                <button id="playStopButtonThree">Play3</button><!--btn Submit--->
+             <button id="effectButtonOne">Effect off</button><!--btn Submit--->
+            <!--   <button id="playStopButtonTwo">Play2</button>----btn Submit--->
+            <!--    <button id="playStopButtonThree">Play3</button>--btn Submit--->
             
 
             <script src="audioEffects.js"></script>

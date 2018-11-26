@@ -26,7 +26,7 @@ var context = new AudioContext(),
     //var sample2 = new Audio(sounds/sample2.wav),
 
     visualTestCurve = 0, //[!!Nati Test!!]
-
+    multiplicator = 0,
     request = new XMLHttpRequest(),
 
     stream1 = context.createMediaElementSource(sample1),
@@ -43,9 +43,9 @@ var context = new AudioContext(),
     //ab hier referenzen zu grafischen Elementen
     
     sliders = document.getElementsByClassName("slider"),
-    modeButtonOne = document.getElementById("playStopButtonOne"), 
-    modeButtonTwo = document.getElementById("playStopButtonTwo"),
-    modeButtonThree = document.getElementById("playStopButtonThree"), 
+    modeButtonOne = document.getElementById("effectButtonOne"), 
+    //modeButtonTwo = document.getElementById("playStopButtonTwo"),
+    //modeButtonThree = document.getElementById("playStopButtonThree"), 
     submitButton = document.getElementById("submitBtn"),
     selectList =document.getElementById("selectList"), 
     valueFreqMin = document.getElementById("frequMin"),
@@ -134,14 +134,14 @@ function changeParameter() {
     switch(this.id) {
         case "frequencySlider": //***** */ = ID vom Slider
             //filter.frequency.value = this.value;
-            document.getElementById("frequencyOutput").innerHTML = this.value + " db"; //*** */aktueller Wert-Output vom Slider + "name"
+          //  document.getElementById("frequencyOutput").innerHTML = this.value + " db"; //*** */aktueller Wert-Output vom Slider + "name"
             gain1.gain.setValueAtTime(this.value, context.currentTime);
             gain1.connect(waveShaper1);
             break;
         case "detuneSlider":
             //filter.detune.value = this.value;
-            document.getElementById("detuneOutput").innerHTML = this.value + " Cents";
-            document.getElementById("detuneDivContainerOutput").innerHTML = this.value; 
+          //  document.getElementById("detuneOutput").innerHTML = this.value ;
+          //  document.getElementById("detuneDivContainerOutput").innerHTML = "<br>" + this.value; 
             document.getElementById("moveContainer").style.marginTop = this.value * 5 + "%" ; //margin vom Container wird verändert  
 
             break;
@@ -156,24 +156,59 @@ function changeParameter() {
     }
 }
 
+var buttonHovorColor = "darkseagreen";
+var buttonColor = "grey";
+
 //---Play/Stop Button wird gedrückt
-modeButtonOne.addEventListener("click", function () {
+modeButtonOne.addEventListener("click", function() {
     if (stream1isPlaying) { 
         //sample1.pause(); 
         waveShaper1.curve = null;
-        modeButtonOne.innerHTML = "Play";
+        this.innerHTML = "Effect off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white";
+  //      buttonColor = "grey"; //"#d85eaf"  
+ //       buttonHovorColor = "white";  
+        setMultiplicator(0);
     } else {
         //sample1.play();
         waveShaper1.curve = makeDistortionCurve(400);
-        modeButtonOne.innerHTML = "Stop";
+        this.innerHTML = "Effect on";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";
     }
 
     stream1isPlaying = !stream1isPlaying;
-})
+});
 
+
+modeButtonOne.addEventListener("mousedown", function() {  
+   
+    //this.style.backgroundColor = buttonHovorColor;
+    this.style.backgroundColor = "#689c68";
+    
+});
+
+modeButtonOne.addEventListener("mouseover", function() {  //hover
+   
+    this.style.color = "#b4f8c0";
+    
+    
+});
+
+modeButtonOne.addEventListener("mouseout", function() {
+
+     this.style.color = buttonColor;
+     //this.style.color = "white";
+    
+});
+ 
 
 //Testvorgangs Button FUNZT
 //---Play/Stop Button 2 wird gedrückt
+/*
 modeButtonTwo.addEventListener("click", function () {
 
     if (stream2isPlaying) { 
@@ -188,7 +223,7 @@ modeButtonTwo.addEventListener("click", function () {
 
     stream2isPlaying = !stream2isPlaying;
 })
-
+*/
 
 // Funktion wird später ausgebaut
 /*sample1.addEventListener("ended", function () { //[Nati: function neu einzeln machen und weiter oben erneut aufrufen]
@@ -199,18 +234,19 @@ modeButtonTwo.addEventListener("click", function () {
 
 //Lässt das "active" Textfeld erscheinen wenn Checkbox aktiviert ist
 //checkbox1.addEventListener("onclick", checkFunction1);
-    
 function checkFunction1() {
     var checkBox1 = document.getElementById("checkMusic");
     var text = document.getElementById("text");
     if (checkBox1.checked == true){ //Wenn Checkbox aktiv ist
-        text.style.display = "inline"; 
-        //Hier Code Daniel
+        //text.style.display = "inline"; 
+        text.innerHTML ="on"
+        setMultiplicator(5);
         
         stream1Intervall = setInterval(mode1,500);
     } else {
-       text.style.display = "none";
+        text.innerHTML = "off"
        clearInterval(stream1Intervall);
+       setMultiplicator(0);
     }
 }
 
@@ -231,6 +267,7 @@ function mode1(){
         }
         waveShaper1.curve = makeDistortionCurve(mode1changer1);
     }
+
     //Alternative hier
     //playSound(1);
     /*
@@ -259,7 +296,8 @@ function makeDistortionCurve(amount) {
 
       visualTestCurve = curve[i]; //[Nati Test!!]
     }
-    visualTestCurve = curve[1];
+    
+
     return curve;
   };
 
@@ -315,7 +353,7 @@ function playSounds(buffer, time) {
 /**Nati Teil: ***********************************************  Visual Effects ***********************/
 
 /**Button Three */
-
+/*
 var isPlaying = false;
 modeButtonThree.addEventListener("click", function () {
 if (isPlaying) {            
@@ -327,7 +365,7 @@ if (isPlaying) {
 }
 isPlaying = !isPlaying;
 });
-
+*/
 
 /* CANVAS */
 window.onload = function(){
@@ -339,35 +377,46 @@ window.onload = function(){
         c.fillRect(0,0, canvas.width, canvas.height);
 
     
-    var posX = 50;
+    var posX = 40;
     var posY = 50;
     var plusMinus = 1;
     var curveCos;
+    
     setInterval(function(){
 
         posX += plusMinus;
         posY += 1;
-        curveCos = Math.cos(posX)
+        curveCos = (Math.cos(posX * 0.1));
 
-        if (posX >= 350 || posX <= 30){
+        if (posX >= 480 || posX <= 20){
             plusMinus *= -1;
         }
-        
+         if (visualTestCurve == 0){
+            
+         }
+         else {
+            multiplicator = (visualTestCurve*100000 - 34880);}
+         
+       
 
-
-        document.getElementById("moveCycle").innerHTML = curveCos + " pos: " + posX + " curve: " + visualTestCurve; 
+    //    document.getElementById("moveCycle").innerHTML = curveCos + " pos: " + posX + "<br> curvenwert: " + visualTestCurve + "<br>Beispielwerte: " + 3.5*(Math.cos(0 )) + "<br>Jetziger wert: " + curveCos + "<br>multiplikator: " + multiplicator; 
         c.fillStyle = "rgba(0,0,0,0.03)";
         c.fillRect(0,0, canvas.width, canvas.height);
 
         c.fillStyle = "white";
         c.beginPath();
-        c.arc(posX, Math.cos(posY)*30 + 50, 30, 0, TWO_PI, false); //x, y, radius
+        c.arc(posX, curveCos*multiplicator +125, setMultiplicator(multiplicator), 0, TWO_PI, false); //x, y, radius
         c.fill();
 
 
 
-    }, 50);
+    }, 10);
 
 };
 
+function setMultiplicator(s) {
 
+    multiplicator = s;
+
+    return multiplicator;
+  };
