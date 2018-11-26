@@ -269,7 +269,7 @@ function playSounds(buffer, time) {
 
 
 
-/*************************************************Visual Effects */
+/*************************************************  Visual Effects **********/
 
 modeButtonThree = document.getElementById("playStopButtonThree"), 
 streamisPlaying = false;
@@ -303,20 +303,20 @@ window.onload = function(){
         posX += 1;
         posY += 1;
 
-        //Math.sin(posY)
+        
 
-        document.getElementById("moveCycle").innerHTML = posY; 
+        document.getElementById("moveCycle").innerHTML = Math.cos(posY) + " pos: " + posY ; 
         c.fillStyle = "rgba(0,0,0,0.03)";
         c.fillRect(0,0, canvas.width, canvas.height);
 
         c.fillStyle = "white";
         c.beginPath();
-        c.arc(posX, posY, 30, 0, TWO_PI, false); //x, y, radius
+        c.arc(posX, Math.cos(posY)*30 + 50, 30, 0, TWO_PI, false); //x, y, radius
         c.fill();
 
 
 
-    }, 30);
+    }, 50);
 
 };
 
