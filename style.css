@@ -5,19 +5,20 @@ html, body {
     color: #d8d6c2;
 }
 
-#playStopButtonOne {
+#playStopButtonOne, #playStopButtonTwo, #playStopButtonThree {
     background-color: #577be0;
     border: none;
-    color: #fdfdfd;
+    color: #e2e5ff;
     font-size: 1.5em;
-    width:180px;
-    margin-right: 10%;
-    padding: 0.5em 1.5em;
+    width:120px;
+    padding: 0.5em;
 }
 
-#playStopButtonOne:active {
-   background: #7eaafc;
+#playStopButtonOne:active, #playStopButtonTwo:active, #playStopButtonThree:active {
+   background: #a1baff;
 }
+
+
 
 div {
     padding :10px;

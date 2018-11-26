@@ -15,18 +15,17 @@
 -----------
 */
 
-    modeButtonThree = document.getElementById("playStopButtonThree"), 
-    streamisPlaying = false;
-    
+modeButtonThree = document.getElementById("playStopButtonThree"), 
+streamisPlaying = false;
+
 
 //---Play/Stop Button wird gedrückt
 modeButtonThree.addEventListener("click", function () {
-    if (streamisPlaying) {            
-        modeButtonThree.innerHTML = "Play";
-    } else {       
-        modeButtonThree.innerHTML = "Stop";
-    }
+if (streamisPlaying) {            
+    modeButtonThree.innerHTML = "Play";
+} else {       
+    modeButtonThree.innerHTML = "Stop";
+}
 
-    streamisPlaying = !streamisPlaying;
-})
-
+streamisPlaying = !streamisPlaying;
+});
