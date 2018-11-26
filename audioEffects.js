@@ -206,10 +206,10 @@ submitButton.addEventListener("click", function () {
 //DANIEL TEIL -------------------------------------------------------------------------------------------
 
 function mode1(){
-    sample1.play();
+    //sample1.play();
     //Alternative hier
     var undecodedAudio = request.response;
-    context.decodeAudioData(undecodedAudio, function (buffer)){
+    context.decodeAudioData(undecodedAudio, function (buffer){
         var sourceBuffer = context.createBufferSource();
         sourceBuffer.connect(context.destination);
         sourceBuffer.start(context.currentTime);
