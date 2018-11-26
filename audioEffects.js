@@ -126,7 +126,8 @@ function changeParameter() {
             //filter.detune.value = this.value;
             document.getElementById("detuneOutput").innerHTML = this.value + " Cents";
             document.getElementById("detuneDivContainerOutput").innerHTML = this.value; 
-            document.getElementById("moveContainer").style.marginTop = this.value * 5 + "%" ; //margin vom Container wird verändert       
+            document.getElementById("moveContainer").style.marginTop = this.value * 5 + "%" ; //margin vom Container wird verändert  
+
             break;
         case "qSlider":
             //filter.Q.value = this.value;
@@ -269,4 +270,54 @@ function playSounds(buffer, time) {
 
 
 /*************************************************Visual Effects */
+
+modeButtonThree = document.getElementById("playStopButtonThree"), 
+streamisPlaying = false;
+
+
+//---Play/Stop Button wird gedrückt
+modeButtonThree.addEventListener("click", function () {
+if (streamisPlaying) {            
+    modeButtonThree.innerHTML = "Play";
+} else {       
+    modeButtonThree.innerHTML = "Stop";
+}
+
+streamisPlaying = !streamisPlaying;
+});
+
+/* CANVAS */
+window.onload = function(){
+    var canvas = document.getElementById("paper"),
+        c = canvas.getContext("2d");
+        TWO_PI = Math.PI * 2;
+
+        c.fillStyle = "black";
+        c.fillRect(0,0, canvas.width, canvas.height);
+
+    
+    var posX = 50;
+    var posY = 50;
+    setInterval(function(){
+
+        posX += 1;
+        posY += 1;
+
+        //Math.sin(posY)
+
+        document.getElementById("moveCycle").innerHTML = posY; 
+        c.fillStyle = "rgba(0,0,0,0.03)";
+        c.fillRect(0,0, canvas.width, canvas.height);
+
+        c.fillStyle = "white";
+        c.beginPath();
+        c.arc(posX, posY, 30, 0, TWO_PI, false); //x, y, radius
+        c.fill();
+
+
+
+    }, 30);
+
+};
+
 
