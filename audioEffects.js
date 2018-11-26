@@ -25,6 +25,7 @@ var context = new AudioContext(),
     //var sample2 = new Audio(sounds/sample2.wav),
     //var sample2 = new Audio(sounds/sample2.wav),
 
+    visualTestCurve = 0, //[!!Nati Test!!]
 
     request = new XMLHttpRequest(),
 
@@ -133,7 +134,9 @@ function changeParameter() {
     switch(this.id) {
         case "frequencySlider": //***** */ = ID vom Slider
             //filter.frequency.value = this.value;
-            document.getElementById("frequencyOutput").innerHTML = this.value + " Hz"; //*** */aktueller Wert-Output vom Slider + "name"
+            document.getElementById("frequencyOutput").innerHTML = this.value + " db"; //*** */aktueller Wert-Output vom Slider + "name"
+            gain1.gain.setValueAtTime(this.value, context.currentTime);
+            gain1.connect(waveShaper1);
             break;
         case "detuneSlider":
             //filter.detune.value = this.value;
@@ -253,7 +256,10 @@ function makeDistortionCurve(amount) {
     for ( ; i < n_samples; ++i ) {
       x = i * 2 / n_samples - 1;
       curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
+
+      visualTestCurve = curve[i]; //[Nati Test!!]
     }
+    visualTestCurve = curve[1];
     return curve;
   };
 
@@ -349,7 +355,7 @@ window.onload = function(){
         
 
 
-        document.getElementById("moveCycle").innerHTML = curveCos + " pos: " + posX ; 
+        document.getElementById("moveCycle").innerHTML = curveCos + " pos: " + posX + " curve: " + visualTestCurve; 
         c.fillStyle = "rgba(0,0,0,0.03)";
         c.fillRect(0,0, canvas.width, canvas.height);
 
