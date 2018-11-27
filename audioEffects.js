@@ -18,6 +18,7 @@
 //Button nameBtn
 //
 
+/**BUG: Erst den effect off knopf an und aus stellen - danach den hauptknopf */
 
 var context = new AudioContext(),
     //hierunter audio api elemente
@@ -43,13 +44,14 @@ var context = new AudioContext(),
     //ab hier referenzen zu grafischen Elementen
     
     sliders = document.getElementsByClassName("slider"),
-    modeButtonOne = document.getElementById("effectButtonOne"), 
-    //modeButtonTwo = document.getElementById("playStopButtonTwo"),
+    effectModeOneButtonOne = document.getElementById("effectButtonOne"), 
+    playStopButtonOne = document.getElementById("playStopButtonOne"),
     //modeButtonThree = document.getElementById("playStopButtonThree"), 
     submitButton = document.getElementById("submitBtn"),
     selectList =document.getElementById("selectList"), 
     valueFreqMin = document.getElementById("frequMin"),
     valueFreqMax = document.getElementById("frequMax"); 
+    modeOneIsOn = false;
     stream1isPlaying = false;
     stream2isPlaying = false;
 
@@ -94,7 +96,7 @@ for (var i = 0; i < sliders.length; i++) {
 /* DropDownMenü */
 selectList.addEventListener("change", function() {
     var name = selectList.options[selectList.selectedIndex].value;
-    document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // */Wert aus der Liste: selectList.options[selectList.selectedIndex].value;   
+//    document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // */Wert aus der Liste: selectList.options[selectList.selectedIndex].value;   
     sample1 = new Audio("sounds/" + name + ".wav");
     stream1 = context.createMediaElementSource(sample1);
     stream1.connect(gain1);
@@ -102,31 +104,6 @@ selectList.addEventListener("change", function() {
 //    loadImpulseResponse(name); //Führt Funktion loadImpulseResponse mit der ausgewählten Datei aus
         
 });
-
-
-
-/*  ++++++++++++++++++Kann gelöscht werden +++++++++++++++
-function loadImpulseResponse(name) {
-    var request = new XMLHttpRequest();
-    request.open("GET",  ("../sounds/impulseResponses/" + name + ".wav"), true);
-    request.responseType = "arraybuffer";
-
-    request.onload = function () {
-        var undecodedAudio = request.response;
-        context.decodeAudioData(undecodedAudio, function (buffer) {
-            if (convolver) {convolver.disconnect(); }
-            convolver = context.createConvolver();
-            convolver.buffer = buffer;
-            convolver.normalize = true;
-
-            source.connect(convolver);
-            convolver.connect(context.destination);
-        });
-    };
-    request.send();
-}
-*/
-
 
 function changeParameter() {
 
@@ -156,79 +133,82 @@ function changeParameter() {
     }
 }
 
-var buttonHovorColor = "darkseagreen";
-var buttonColor = "grey";
+var buttonHovorColor = "b4f8c0";
+var buttonColor = "white";
 
 //---Play/Stop Button wird gedrückt
-modeButtonOne.addEventListener("click", function() {
-    if (stream1isPlaying) { 
-        //sample1.pause(); 
-        waveShaper1.curve = null;
-        this.innerHTML = "Effect off"; 
-        this.style.backgroundColor = "grey";
-        this.style.color = "white"; 
-        buttonColor = "white";
-  //      buttonColor = "grey"; //"#d85eaf"  
- //       buttonHovorColor = "white";  
-        setMultiplicator(0);
-    } else {
-        //sample1.play();
-        waveShaper1.curve = makeDistortionCurve(400);
-        this.innerHTML = "Effect on";
-        this.style.backgroundColor = "green";
-        this.style.color = "yellow";  
-        buttonColor = "yellow";
-    }
+effectModeOneButtonOne.addEventListener("click", function(){ 
 
-    stream1isPlaying = !stream1isPlaying;
+    if (stream1isPlaying) { //Wenn aus geht
+     //sample1.pause(); 
+    waveShaper1.curve = null;
+            this.innerHTML = "Effect off"; 
+            this.style.backgroundColor = "grey";
+            this.style.color = "white"; 
+            buttonColor = "white"; 
+            multiplicator = 0;
+        } else {
+            //sample1.play();
+            //Wenn an geht
+            waveShaper1.curve = makeDistortionCurve(400);
+            this.innerHTML = "Effect on";
+            this.style.backgroundColor = "green";
+            this.style.color = "yellow";  
+            buttonColor = "yellow";
+        }
+    
+        stream1isPlaying = !stream1isPlaying;
+
 });
 
 
-modeButtonOne.addEventListener("mousedown", function() {  
+
+
+effectModeOneButtonOne.addEventListener("mousedown", function() {  //active
    
-    //this.style.backgroundColor = buttonHovorColor;
-    this.style.backgroundColor = "#689c68";
-    
+    this.style.backgroundColor = "#689c68";  
 });
 
-modeButtonOne.addEventListener("mouseover", function() {  //hover
-   
-    this.style.color = "#b4f8c0";
-    
-    
-});
+effectModeOneButtonOne.addEventListener("mouseover", clickHover);  //hover
+  
 
-modeButtonOne.addEventListener("mouseout", function() {
+function clickHover(){
+    if(!effectModeOneButtonOne.disabled){
+        effectModeOneButtonOne.style.color = "white";
+    }else{
+        effectModeOneButtonOne.style.color = "#b4f8c0";
+    };
+};
+
+effectModeOneButtonOne.addEventListener("mouseout", function() {  //mouse out
 
      this.style.color = buttonColor;
-     //this.style.color = "white";
-    
+
 });
  
 
-//Testvorgangs Button FUNZT
-//---Play/Stop Button 2 wird gedrückt
-/*
-modeButtonTwo.addEventListener("click", function () {
+playStopButtonOne.addEventListener("click", function() { //Hauptknopf fürs erste StartModul
 
-    if (stream2isPlaying) { 
-        //stream1 = context.createMediaElementSource(sample1),
-        sample1 = new Audio("sounds/sample1.wav"),
-        modeButtonTwo.innerHTML = "Play";
-    } else {
-        //sample1.play();
-        sample1 = new Audio("sounds/sample2.wav"),
-        modeButtonTwo.innerHTML =  "Stop";
-    }
+    if (modeOneIsOn) {  //Wenn aus geht
+        this.innerHTML = "Off"; 
+        this.style.backgroundColor = "grey";
+        clearInterval(stream1Intervall);
+        //multiplicator= 0;
+    } else {  //Wenn an geht       
+        this.innerHTML = "On";
+        this.style.backgroundColor = "green";   
+        multiplicator= 5;      
+        stream1Intervall = setInterval(mode1,500); 
+        //effectModeOneButtonOne.disabled = true;    
+    };
+    modeOneIsOn = !modeOneIsOn;
+});
 
-    stream2isPlaying = !stream2isPlaying;
-})
-*/
 
 // Funktion wird später ausgebaut
 /*sample1.addEventListener("ended", function () { //[Nati: function neu einzeln machen und weiter oben erneut aufrufen]
     stream1isPlaying = false;
-    modeButtonOne.innerHTML = "Play";
+    effectModeOneButtonOne.innerHTML = "Play";
 }); 
 */
 
@@ -240,18 +220,17 @@ function checkFunction1() {
     if (checkBox1.checked == true){ //Wenn Checkbox aktiv ist
         //text.style.display = "inline"; 
         text.innerHTML ="on"
-        setMultiplicator(5);
-        
+        multiplicator= 5;       
         stream1Intervall = setInterval(mode1,500);
     } else {
         text.innerHTML = "off"
        clearInterval(stream1Intervall);
-       setMultiplicator(0);
-    }
-}
+       multiplicator = 0;
+    };
+};
 
 //Submit Button
-submitButton.addEventListener("click", function () {
+submitButton.addEventListener("click", function() {
     document.getElementById("frequencySlider").min = valueFreqMin.value;
     document.getElementById("frequencySlider").max = valueFreqMax.value;
 })
@@ -390,13 +369,17 @@ window.onload = function(){
 
         if (posX >= 480 || posX <= 20){
             plusMinus *= -1;
-        }
-         if (visualTestCurve == 0){
-            
+        };
+        
+        
+        if (modeOneIsOn){
+            multiplicator = (visualTestCurve*100000 - 34880);
          }
          else {
-            multiplicator = (visualTestCurve*100000 - 34880);}
+            multiplicator = 0;
+        };
          
+       //multiplicator = (visualTestCurve*100000 - 34880);
        
 
     //    document.getElementById("moveCycle").innerHTML = curveCos + " pos: " + posX + "<br> curvenwert: " + visualTestCurve + "<br>Beispielwerte: " + 3.5*(Math.cos(0 )) + "<br>Jetziger wert: " + curveCos + "<br>multiplikator: " + multiplicator; 
@@ -405,8 +388,11 @@ window.onload = function(){
 
         c.fillStyle = "white";
         c.beginPath();
-        c.arc(posX, curveCos*multiplicator +125, setMultiplicator(multiplicator), 0, TWO_PI, false); //x, y, radius
+        c.arc(posX, curveCos*multiplicator +125, multiplicator, 0, TWO_PI, false); //x, y, radius
         c.fill();
+        //document.getElementById("infoText").innerHTML = "<br> multiplicator: " + curveCos*multiplicator +125 +"<br>mode on?: " + modeOneIsOn; //TEST NATI
+
+
 
 
 
@@ -414,9 +400,4 @@ window.onload = function(){
 
 };
 
-function setMultiplicator(s) {
 
-    multiplicator = s;
-
-    return multiplicator;
-  };

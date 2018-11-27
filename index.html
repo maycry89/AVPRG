@@ -32,10 +32,10 @@
                 </select>
                 <!----------------- Checkbox --------------------->
                 <input type="checkbox" id="checkMusic" onclick="checkFunction1()">
-                <button id="playStopButton" >Off</button> 
+                <button id="playStopButtonOne" >Off</button> 
                 <span id="text" >off</span>
             </div>
-                   
+              
             <div id="functionContainer">Gain
                 <span id="frequencyOutput" class="output">db</span>
                 <input type="range" min="1" max="40" value="1" class="slider" id="frequencySlider">
@@ -48,12 +48,13 @@
             <div id="functionContainer">Move
                 <input type="range" min="0" max="10" value="0" class="slider" id="detuneSlider">
                 <span id="detuneOutput" class="output"></span>
+                
             </div>
             
              <button id="effectButtonOne">Effect off</button><!--btn Submit--->
             <!--   <button id="playStopButtonTwo">Play2</button>----btn Submit--->
-            <!--    <button id="playStopButtonThree">Play3</button>--btn Submit--->
-            
+            <!--    <button id="playStopButtonThree">Play3</button>--btn Submit---
+            <span id="infoText" class="output">Infos</span> -->
 
             <script src="audioEffects.js"></script>
             <script src="visualEffects.js"></script> 

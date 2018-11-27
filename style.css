@@ -5,7 +5,7 @@ html, body {
     color: #d8d6c2;
 }
 
-#effectButtonOne, #playStopButtonTwo, #playStopButtonThree {
+#effectButtonOne, #playStopButtonOne, #playStopButtonThree {
     background-color:grey;
     border: none;
     color: #e2e5ff;
@@ -14,11 +14,11 @@ html, body {
     padding: 0.5em;
 }
 
-#effectButtonOne:active {
+#effectButtonOne:active, #playStopButtonOne:active {
     background-color:#689c68;
 }
 
-#effectButtonOne:hover {
+#effectButtonOne:hover, #playStopButtonOne:hover {
     color: #b4f8c0;
 }
 
