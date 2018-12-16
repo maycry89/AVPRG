@@ -172,7 +172,7 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";
-        filter1.type = "highpass";
+        filter1.type = "lowpass";
         filter1.frequency = 20000;
         waveShaper1.connect(filter1);
         filter1.connect(context.destination);
