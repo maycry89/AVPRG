@@ -130,7 +130,7 @@ function changeParameter() {
         case "frequencySlider": //***** */ = ID vom Slider
             //filter.frequency.value = this.value;
           //  document.getElementById("frequencyOutput").innerHTML = this.value + " db"; //*** */aktueller Wert-Output vom Slider + "name"
-            gain1.gain.setValueAtTime(this.value, context.currentTime);
+            //gain1.gain.setValueAtTime(this.value, context.currentTime);
             gain1.connect(waveShaper1);
             break;
         case "detuneSlider":
@@ -413,16 +413,35 @@ effectModeThreeButtonThree.addEventListener("click", function() {
 //---Hover Effekt für die Buttons: ---
 
 for (var i = 0; i < effectButtons.length; i++) {
-    effectButtons[i].addEventListener("mousemove", clickHover);
+    effectButtons[i].addEventListener("mouseover", clickHover);
 }
 
 for (var i = 0; i < playStopButtons.length; i++) {
-    playStopButtons[i].addEventListener("mousemove", clickHover);
+    playStopButtons[i].addEventListener("mouseover", clickHover);
+}
+
+for (var i = 0; i < effectButtons.length; i++) {
+    effectButtons[i].addEventListener("mouseout", clickOut);
+}
+
+for (var i = 0; i < playStopButtons.length; i++) {
+    playStopButtons[i].addEventListener("mouseout", clickOut);
 }
 
 function clickHover(){  
-     
-        effectModeOneButtonOne.style.color = "#b4f8c0";
+
+        this.style.color = "#b4f8c0";
+};
+
+function clickOut(){  
+
+    if( this.style.backgroundColor == "green"){
+        this.style.color = "yellow"; 
+    }
+    else{
+        this.style.color = "white";
+    }
+         
 };
 
 /* //Nat: Wird noch überarbeitet, Hover effekte
