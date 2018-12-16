@@ -142,7 +142,7 @@ var buttonColor = "white";
 //---Effekt 1 Button wird gedrückt
 effectModeOneButtonOne.addEventListener("click", function(){ 
 
-    if (stream1isPlaying) { //Wenn aus geht
+    if (modeOneIsOn) { //Wenn aus geht
      //sample1.pause(); 
         waveShaper1.curve = null;
         this.innerHTML = "Effect 1 off"; 
@@ -160,7 +160,7 @@ effectModeOneButtonOne.addEventListener("click", function(){
         buttonColor = "yellow";
     }
     
-        stream1isPlaying = !stream1isPlaying;
+        modeOneIsOn = !modeOneIsOn;
 
 });
 
@@ -173,6 +173,7 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.style.color = "white"; 
         buttonColor = "white";
         filter1.type = "highpass";
+        filter1.frequency = 20000;
         waveShaper1.connect(filter1);
         filter1.connect(context.destination);
         
