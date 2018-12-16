@@ -23,8 +23,8 @@
 var context = new AudioContext(),
     //hierunter audio api elemente
     sample1 = new Audio("sounds/sample1.wav"),
-    //var sample2 = new Audio(sounds/sample2.wav),
-    //var sample2 = new Audio(sounds/sample2.wav),
+    sample2 = new Audio("sounds/sample2.wav"),
+    sample2 = new Audio("sounds/sample3.wav"),
 
     visualTestCurve = 0, //[!!Nati Test!!]
     multiplicator = 0,
@@ -45,7 +45,9 @@ var context = new AudioContext(),
     //ab hier referenzen zu grafischen Elementen
     
     sliders = document.getElementsByClassName("slider"),
-    
+    effectButtons = document.getElementsByClassName("effectButton"),
+    playStopButtons = document.getElementsByClassName("playStopButton"),
+
     playStopButtonOne = document.getElementById("playStopButtonOne"),
     effectModeOneButtonOne = document.getElementById("effectButtonOne"), 
     effectModeOneButtonTwo = document.getElementById("effectButtonTwo"),
@@ -61,12 +63,14 @@ var context = new AudioContext(),
     effectModeThreeButtonTwo = document.getElementById("effectThreeButtonTwo"),
     effectModeThreeButtonThree = document.getElementById("effectThreeButtonThree"),
     
-    
+    playStopActivatedAry = [];
 
     submitButton = document.getElementById("submitBtn"),
     selectList =document.getElementById("selectList"), 
     valueFreqMin = document.getElementById("frequMin"),
     valueFreqMax = document.getElementById("frequMax"); 
+
+    activatedModes = [];
     modeOneIsOn = false;
     modeTwoIsOn = false;
     stream1isPlaying = false;
@@ -147,13 +151,79 @@ function changeParameter() {
     }
 }
 
+/**********************************************BUTTONS**********************************************************************************/
 var buttonHovorColor = "b4f8c0";
 var buttonColor = "white";
+
+//****************** */Play Stop Buttons 1 - 3 *****************************
+
+//---PlayStop 1 Button wird gedrückt
+playStopButtonOne.addEventListener("click", function(){ 
+    if (playStopActivatedAry[0]) { //Wenn aus geht
+        clearInterval(stream1Intervall);
+        multiplicator = 0;
+
+        this.innerHTML = "Off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white"; 
+    } else { //Wenn an geht
+        multiplicator= 5;       
+        stream1Intervall = setInterval(stream1intervallFunction,500);
+
+        this.innerHTML = "On";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";
+    }   
+    playStopActivatedAry[0] = !playStopActivatedAry[0];
+});
+
+
+//---PlayStop 2 Button wird gedrückt
+playStopButtonTwo.addEventListener("click", function(){ 
+
+    if (playStopActivatedAry[1]) { //Wenn aus geht
+        this.innerHTML = "Off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white"; 
+    } else {
+
+        this.innerHTML = "On";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";
+    }   
+    playStopActivatedAry[1] = !playStopActivatedAry[1];
+});
+
+//---PlayStop 3 Button wird gedrückt 
+playStopButtonThree.addEventListener("click", function(){ 
+
+    if (playStopActivatedAry[2]) { //Wenn aus geht
+        this.innerHTML = "Off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white"; 
+    } else {
+
+        this.innerHTML = "On";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";
+    }   
+    playStopActivatedAry[2] = !playStopActivatedAry[2];
+});
+
+
+
+//**************************** Effect Buttons 1 - 9 *****************************
 
 //---Effekt 1 Button wird gedrückt
 effectModeOneButtonOne.addEventListener("click", function(){ 
 
-    if (modeOneIsOn) { //Wenn aus geht
+    if (activatedModes[0]) { //Wenn aus geht
      //sample1.pause(); 
         waveShaper1.curve = null;
         this.innerHTML = "Effect 1 off"; 
@@ -171,14 +241,14 @@ effectModeOneButtonOne.addEventListener("click", function(){
         buttonColor = "yellow";
     }
     
-        modeOneIsOn = !modeOneIsOn;
+        activatedModes[0] = !activatedModes[0];
 
 });
 
 //---Effekt 2 Button wird gedrückt
 effectModeOneButtonTwo.addEventListener("click", function() { 
 
-    if (modeTwoIsOn) {  //Wenn aus geht
+    if (activatedModes[1]) {  //Wenn aus geht
         this.innerHTML = "Effect 2 off"; 
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
@@ -196,8 +266,164 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         filter1.disconnect();
         waveShaper1.connect(context.destination);
     };
-    modeTwoIsOn = !modeTwoIsOn;
+    activatedModes[1] = !activatedModes[1];
 });
+
+//---Effekt 3 Button wird gedrückt
+effectModeOneButtonThree.addEventListener("click", function() { 
+
+    if (activatedModes[2]) {  //Wenn aus geht
+        this.innerHTML = "Effect 3 off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white";
+        
+        gain1.value(100);
+        
+    } else {  //Wenn an geht       
+        this.innerHTML = "Effect 3 on";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";  
+        
+        gain1.value(0);
+    };
+    activatedModes[2] = !activatedModes[2];
+});
+
+//---Effekt 4 Button wird gedrückt ( 2 - 1 )
+effectModeTwoButtonOne.addEventListener("click", function(){ 
+
+    if (activatedModes[3]) { //Wenn aus geht
+ 
+        this.innerHTML = "Effect 1 off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white"; 
+
+    } else {
+        //Wenn an geht
+   
+        this.innerHTML = "Effect 1 on";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";
+    }
+    
+        activatedModes[3] = !activatedModes[3];
+
+});
+
+//---Effekt 5 Button wird gedrückt (2 - 2)
+effectModeTwoButtonTwo.addEventListener("click", function() { 
+
+    if (activatedModes[4]) {  //Wenn aus geht
+        this.innerHTML = "Effect 2 off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white"; 
+
+    } else { //Wenn an geht
+   
+        this.innerHTML = "Effect 2 on";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";
+    };
+    activatedModes[4] = !activatedModes[4];
+});
+
+//---Effekt 6 Button wird gedrückt (2 - 3)
+effectModeTwoButtonThree.addEventListener("click", function() { 
+
+    if (activatedModes[5]) {  //Wenn aus geht
+        this.innerHTML = "Effect 3 off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white";
+                                                               
+    } else {  //Wenn an geht       
+        this.innerHTML = "Effect 3 on";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";    
+    };
+    activatedModes[5] = !activatedModes[5];
+});
+
+//---Effekt 7 Button wird gedrückt ( 3 - 1 )
+effectModeThreeButtonOne.addEventListener("click", function(){ 
+
+    if (activatedModes[6]) { //Wenn aus geht
+    
+        this.innerHTML = "Effect 1 off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white";         
+    } else {   //Wenn an geht
+        
+        this.innerHTML = "Effect 1 on";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";
+    }
+        activatedModes[6] = !activatedModes[6];
+
+});
+
+//---Effekt 8 Button wird gedrückt (3 - 2)
+effectModeThreeButtonTwo.addEventListener("click", function() { 
+
+    if (activatedModes[7]) {  //Wenn aus geht
+        this.innerHTML = "Effect 2 off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white";   
+        
+    } else {  //Wenn an geht  
+
+        this.innerHTML = "Effect 2 on";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";  
+    };
+    activatedModes[7] = !activatedModes[7];
+});
+
+//---Effekt 9 Button wird gedrückt (3 - 3)
+effectModeThreeButtonThree.addEventListener("click", function() { 
+
+    if (activatedModes[8]) {  //Wenn aus geht
+        this.innerHTML = "Effect 3 off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white";
+
+    } else {  //Wenn an geht  
+
+        this.innerHTML = "Effect 3 on";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";  
+        
+    };
+    activatedModes[8] = !activatedModes[8];
+});
+
+//---Hover Effekt für die Buttons: ---
+
+for (var i = 0; i < effectButtons.length; i++) {
+    effectButtons[i].addEventListener("mousemove", clickHover);
+}
+
+for (var i = 0; i < playStopButtons.length; i++) {
+    playStopButtons[i].addEventListener("mousemove", clickHover);
+}
+
+function clickHover(){  
+     
+        effectModeOneButtonOne.style.color = "#b4f8c0";
+};
 
 /* //Nat: Wird noch überarbeitet, Hover effekte
 effectModeOneButtonOne.addEventListener("mousedown", function() {  //active
@@ -225,27 +451,6 @@ effectModeOneButtonOne.addEventListener("mouseout", function() {  //mouse out
 
 
 
-
-//Effekt 3 Button wird gedrückt
-effectModeOneButtonThree.addEventListener("click", function(){ 
-
-    if (stream1isPlaying) { //Wenn aus geht
-
-            this.innerHTML = "Effect 3 off"; 
-            this.style.backgroundColor = "grey";
-            this.style.color = "white"; 
-            buttonColor = "white"; 
-        } else {
-  
-            this.innerHTML = "Effect 3 on";
-            this.style.backgroundColor = "green";
-            this.style.color = "yellow";  
-            buttonColor = "yellow";
-        }
-    
-        stream1isPlaying = !stream1isPlaying;
-
-});
 
 // Funktion wird später ausgebaut
 /*sample1.addEventListener("ended", function () { //[Nati: function neu einzeln machen und weiter oben erneut aufrufen]
@@ -283,15 +488,19 @@ function stream1intervallFunction(){
     //getData(1);
     //SourceBuffers[1].start(0);
     sample1.play();
-    if(waveShaper1.curve != null){
+    if(activatedModes[0]){
         mode1changer1 += 100;
         if(mode1changer1 > 800){
             mode1changer1 = 200;
         }
         waveShaper1.curve = makeDistortionCurve(mode1changer1);
     }
-    if(modeTwoIsOn){
+    if(activatedModes[1]){
         //possible stuff...
+    }
+    if(activatedModes[2]){
+        mode3changer1 = Math.random()*100;
+        //gain1.value(mode3changer1);
     }
 
     //Alternative hier
