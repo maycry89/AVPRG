@@ -253,6 +253,7 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";
+
         filter1.type = "lowpass";
         filter1.frequency = 3000;
         
@@ -261,6 +262,7 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";  
+
         filter1.type = "allpass";
     };
     activatedModes[1] = !activatedModes[1];
@@ -515,7 +517,7 @@ function stream1intervallFunction(){
         //possible stuff...
     }
     if(activatedModes[2]){
-        mode3changer1 = Math.random()*100;
+        //mode3changer1 = Math.random()*100;
         //gain1.value(mode3changer1);
     }
 
