@@ -80,6 +80,7 @@ var context = new AudioContext(),
     stereoPanner1.connect(context.destination);
 
 
+
     request.open('GET', "sounds/sample1.wav");
     request.responseType = 'arraybuffer';
     
@@ -262,7 +263,7 @@ function checkFunction1() {
         //text.style.display = "inline"; 
         text.innerHTML ="on"
         multiplicator= 5;       
-        stream1Intervall = setInterval(stream1,500);
+        stream1Intervall = setInterval(stream1intervallFunction,500);
     } else {
         text.innerHTML = "off"
        clearInterval(stream1Intervall);
@@ -278,7 +279,7 @@ submitButton.addEventListener("click", function() {
 
 //DANIEL TEIL -------------------------------------------------------------------------------------------
 
-function stream1(){
+function stream1intervallFunction(){
     //getData(1);
     //SourceBuffers[1].start(0);
     sample1.play();
