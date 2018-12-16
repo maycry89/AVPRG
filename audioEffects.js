@@ -34,6 +34,7 @@ var context = new AudioContext(),
     gain1 = context.createGain(),
     stereoPanner1 = context.createStereoPanner(),
     waveShaper1 = context.createWaveShaper(),
+    filter1 = context.createBiquadFilter(),
 
     stream1Intervall,
     source1, source2, source3, 
@@ -58,7 +59,8 @@ var context = new AudioContext(),
     // Hier werden die nodes zusammen gesetzt
     stream1.connect(gain1);
     gain1.connect(waveShaper1);
-    waveShaper1.connect(stereoPanner1);
+    waveShaper1.connect(filter1);
+    filter1.connect(context.destination);
     stereoPanner1.connect(context.destination);
 
 
@@ -141,24 +143,44 @@ effectModeOneButtonOne.addEventListener("click", function(){
 
     if (stream1isPlaying) { //Wenn aus geht
      //sample1.pause(); 
-    waveShaper1.curve = null;
-            this.innerHTML = "Effect 1 off"; 
-            this.style.backgroundColor = "grey";
-            this.style.color = "white"; 
-            buttonColor = "white"; 
-            multiplicator = 0;
-        } else {
-            //sample1.play();
-            //Wenn an geht
-            waveShaper1.curve = makeDistortionCurve(400);
-            this.innerHTML = "Effect 1 on";
-            this.style.backgroundColor = "green";
-            this.style.color = "yellow";  
-            buttonColor = "yellow";
-        }
+        waveShaper1.curve = null;
+        this.innerHTML = "Effect 1 off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white"; 
+        multiplicator = 0;
+    } else {
+        //sample1.play();
+        //Wenn an geht
+        waveShaper1.curve = makeDistortionCurve(400);
+        this.innerHTML = "Effect 1 on";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";
+    }
     
         stream1isPlaying = !stream1isPlaying;
 
+});
+
+//---Effekt 2 Button wird gedrückt
+effectModeOneButtonTwo.addEventListener("click", function() { //Hauptknopf fürs erste StartModul
+
+    if (modeTwoIsOn) {  //Wenn aus geht
+        this.innerHTML = "Effect 2 off"; 
+        this.style.backgroundColor = "grey";
+        this.style.color = "white"; 
+        buttonColor = "white";
+        filter1.type = "highpass";
+        
+    } else {  //Wenn an geht       
+        this.innerHTML = "Effect 2 on";
+        this.style.backgroundColor = "green";
+        this.style.color = "yellow";  
+        buttonColor = "yellow";  
+        filter1.type = null;
+    };
+    modeTwoIsOn = !modeTwoIsOn;
 });
 
 /* //Nat: Wird noch überarbeitet, Hover effekte
@@ -185,25 +207,10 @@ effectModeOneButtonOne.addEventListener("mouseout", function() {  //mouse out
 });
  */
 
-//Effekt 2 Button wird gedrückt
-effectModeOneButtonTwo.addEventListener("click", function() { //Hauptknopf fürs erste StartModul
 
-    if (modeOneIsOn) {  //Wenn aus geht
-        this.innerHTML = "Effect 2 off"; 
-        this.style.backgroundColor = "grey";
-        clearInterval(stream1Intervall);
-        //multiplicator= 0;
-    } else {  //Wenn an geht       
-        this.innerHTML = "Effect 2 on";
-        this.style.backgroundColor = "green";   
-        multiplicator= 5;      
-        stream1Intervall = setInterval(mode1,500); 
-        //effectModeOneButtonOne.disabled = true;    
-    };
-    modeOneIsOn = !modeOneIsOn;
-});
 
-//Effekt 2 Button wird gedrückt
+
+//Effekt 3 Button wird gedrückt
 effectModeOneButtonThree.addEventListener("click", function(){ 
 
     if (stream1isPlaying) { //Wenn aus geht
