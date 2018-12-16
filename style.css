@@ -40,23 +40,6 @@ background-color:#689c68;
 }
 
 
-#effectButtonOne, #effectButtonTwo, #effectButtonThree {
-    background-color:grey;
-    border: none;
-    color: #e2e5ff;
-    font-size: 1.5em;
-    width:150px;
-    padding: 0.5em;
-}
-
-#effectButtonOne:active, #effectButtonTwo:active, #effectButtonThree:active {
-    background-color:#689c68;
-}
-
-#effectButtonOne:hover, #effectButtonTwo:hover, #effectButtonThree:hover {
-    color: #b4f8c0;
-}
-
 
 div {
     padding :10px;
