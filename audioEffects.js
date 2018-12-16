@@ -255,16 +255,13 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         buttonColor = "white";
         filter1.type = "lowpass";
         filter1.frequency = 3000;
-        waveShaper1.connect(filter1);
-        filter1.connect(context.destination);
         
     } else {  //Wenn an geht       
         this.innerHTML = "Effect 2 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";  
-        filter1.disconnect();
-        waveShaper1.connect(context.destination);
+        filter1.type = "allpass";
     };
     activatedModes[1] = !activatedModes[1];
 });
@@ -539,7 +536,7 @@ function stream1intervallFunction(){
 
 function makeDistortionCurve(amount) {
     var k = typeof amount === 'number' ? amount : 50,
-      n_samples = 44100,
+      n_samples = 5,
       curve = new Float32Array(n_samples),
       deg = Math.PI / 180,
       i = 0,

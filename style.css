@@ -6,6 +6,7 @@ html, body {
 }
 
 .playStopButton {
+    border-radius: 40px;
     background-color:grey;
     border: none;
     color: #e2e5ff;
@@ -23,10 +24,11 @@ background-color:#689c68;
 }
 
 .effectButton {
+    border-radius: 7px 7px 30px 30px;
     background-color:grey;
     border: none;
     color: #e2e5ff;
-    font-size: 1.5em;
+    font-size: 1.2em;
     width:150px;
     padding: 0.2em;
 }
@@ -48,6 +50,7 @@ div {
 }
 
 #functionContainer {
+    
     background: #3244a7;
     width: 85%;
     border-style: solid;
@@ -56,6 +59,7 @@ div {
 
 
 #samplesContainer {
+    border-radius: 30px 30px 10px 10px;
     background: #b18df5;
     width: 85%;
     border-style: solid;
@@ -108,18 +112,20 @@ div {
 }
 
 #visualContainer {
+    border-radius: 40px;
     margin: 0;
     padding: 0;
     width: 50%;
     background-color: #141547;
     position: fixed;
-    height: 100%;
+    height: 300px;
     overflow: auto;
     
 }
 #moveContainer {
  /*   margin-top: 20px;
     margin-left: 15%; /*   100 / 2 - 20% /2 = 100/2 = 50-20= 30/2 = 15  */
+    
     padding: 0;
     width: 600%;
     background-color: #ffffff;
