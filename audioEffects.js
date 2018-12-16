@@ -45,9 +45,24 @@ var context = new AudioContext(),
     //ab hier referenzen zu grafischen Elementen
     
     sliders = document.getElementsByClassName("slider"),
+    
+    playStopButtonOne = document.getElementById("playStopButtonOne"),
     effectModeOneButtonOne = document.getElementById("effectButtonOne"), 
     effectModeOneButtonTwo = document.getElementById("effectButtonTwo"),
     effectModeOneButtonThree = document.getElementById("effectButtonThree"), 
+
+    playStopButtonTwo = document.getElementById("playStopButtonTwo"),
+    effectModeTwoButtonOne = document.getElementById("effectTwoButtonOne"), 
+    effectModeTwoButtonTwo = document.getElementById("effectTwoButtonTwo"),
+    effectModeTwoButtonThree = document.getElementById("effectTwoButtonThree"),
+
+    playStopButtonThree = document.getElementById("playStopButtonThree"),
+    effectModeThreeButtonOne = document.getElementById("effectThreeButtonOne"), 
+    effectModeThreeButtonTwo = document.getElementById("effectThreeButtonTwo"),
+    effectModeThreeButtonThree = document.getElementById("effectThreeButtonThree"),
+    
+    
+
     submitButton = document.getElementById("submitBtn"),
     selectList =document.getElementById("selectList"), 
     valueFreqMin = document.getElementById("frequMin"),
@@ -74,7 +89,7 @@ var context = new AudioContext(),
     // WIP FINGER WEG buffer node stuff
     function getData(i) {
         var request = new XMLHttpRequest();
-        request.open('GET',  "sounds/" + (i + 1) + ".wav", true);
+        request.open('GET',  "sounds/sample/" + (i + 1) + ".wav", true);
         request.responseType = 'arraybuffer';
         request.onload = function () {
             var undecodedAudio = request.response;
@@ -86,11 +101,6 @@ var context = new AudioContext(),
             });
         };
         request.send();
-    }
-
-    function playSound(i) {
-        getData(i);
-        sourceBuffers[i].start(0);
     }
 
 for (var i = 0; i < sliders.length; i++) {
@@ -173,7 +183,7 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.style.color = "white"; 
         buttonColor = "white";
         filter1.type = "lowpass";
-        filter1.frequency = 20000;
+        filter1.frequency = 3000;
         waveShaper1.connect(filter1);
         filter1.connect(context.destination);
         
@@ -252,7 +262,7 @@ function checkFunction1() {
         //text.style.display = "inline"; 
         text.innerHTML ="on"
         multiplicator= 5;       
-        stream1Intervall = setInterval(mode1,500);
+        stream1Intervall = setInterval(stream1,500);
     } else {
         text.innerHTML = "off"
        clearInterval(stream1Intervall);
@@ -268,7 +278,9 @@ submitButton.addEventListener("click", function() {
 
 //DANIEL TEIL -------------------------------------------------------------------------------------------
 
-function mode1(){
+function stream1(){
+    //getData(1);
+    //SourceBuffers[1].start(0);
     sample1.play();
     if(waveShaper1.curve != null){
         mode1changer1 += 100;
@@ -276,6 +288,9 @@ function mode1(){
             mode1changer1 = 200;
         }
         waveShaper1.curve = makeDistortionCurve(mode1changer1);
+    }
+    if(modeTwoIsOn){
+        //possible stuff...
     }
 
     //Alternative hier
@@ -312,22 +327,6 @@ function makeDistortionCurve(amount) {
   };
 
 /*
-function getData(i) {
-    var request = new XMLHttpRequest();
-    request.open('GET',  "../sounds/sample" + (i + 1) + ".wav", true);
-    request.responseType = 'arraybuffer';
-    request.onload = function () {
-        var undecodedAudio = request.response;
-
-        context.decodeAudioData(undecodedAudio, function (buffer) {
-            sourceBuffers[i] = context.createBufferSource();
-            sourceBuffers[i].buffer = buffer;
-            sourceBuffers[i].connect(context.destination);
-        });
-    };
-    request.send();
-}
-
 function playSounds(i){
     getData(i);
     sourceBuffers[i].start(0);
