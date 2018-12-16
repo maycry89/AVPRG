@@ -53,6 +53,7 @@ var context = new AudioContext(),
     valueFreqMin = document.getElementById("frequMin"),
     valueFreqMax = document.getElementById("frequMax"); 
     modeOneIsOn = false;
+    modeTwoIsOn = false;
     stream1isPlaying = false;
     stream2isPlaying = false;
 
@@ -164,7 +165,7 @@ effectModeOneButtonOne.addEventListener("click", function(){
 });
 
 //---Effekt 2 Button wird gedrückt
-effectModeOneButtonTwo.addEventListener("click", function() { //Hauptknopf fürs erste StartModul
+effectModeOneButtonTwo.addEventListener("click", function() { 
 
     if (modeTwoIsOn) {  //Wenn aus geht
         this.innerHTML = "Effect 2 off"; 
@@ -172,13 +173,16 @@ effectModeOneButtonTwo.addEventListener("click", function() { //Hauptknopf fürs
         this.style.color = "white"; 
         buttonColor = "white";
         filter1.type = "highpass";
+        waveShaper1.connect(filter1);
+        filter1.connect(context.destination);
         
     } else {  //Wenn an geht       
         this.innerHTML = "Effect 2 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";  
-        filter1.type = null;
+        filter1.disconnect();
+        waveShaper1.connect(context.destination);
     };
     modeTwoIsOn = !modeTwoIsOn;
 });
