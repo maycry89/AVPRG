@@ -116,6 +116,10 @@ var context = new AudioContext(),
 
     request.open('GET', "sounds/sample1.wav");
     request.responseType = 'arraybuffer';
+
+    gain1.gain.setValueAtTime(0, context.currentTime);
+    gain2.gain.setValueAtTime(0, context.currentTime);
+    gain3.gain.setValueAtTime(0, context.currentTime);
     
     streamIntervall = setInterval(streamintervallFunction,5);
 
@@ -195,6 +199,7 @@ playStopButtonOne.addEventListener("click", function(){
         this.style.color = "white"; 
         buttonColor = "white"; 
         multiplicator = 0;
+        gain1.gain.setValueAtTime(0, context.currentTime);
     } else { //Wenn an geht
         //waveShaper1.curve = makeDistortionCurve(400);
         //stream1Intervall = setInterval(stream1intervallFunction,500);  // War das hier auskommentiert??
@@ -204,6 +209,7 @@ playStopButtonOne.addEventListener("click", function(){
         buttonColor = "yellow";
         //multiplicator = 5;
         //increaseRadius(5); //Mat Curve
+        gain1.gain.setValueAtTime(1, context.currentTime);
     }   
     playStopActivatedAry[0] = !playStopActivatedAry[0];
 });
@@ -217,12 +223,14 @@ playStopButtonTwo.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
+        gain2.gain.setValueAtTime(0, context.currentTime);
     } else {
 
         this.innerHTML = "On";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
+        gain2.gain.setValueAtTime(1, context.currentTime);
     }   
     playStopActivatedAry[1] = !playStopActivatedAry[1];
 });
@@ -235,12 +243,14 @@ playStopButtonThree.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
+        gain3.gain.setValueAtTime(0, context.currentTime);
     } else {
 
         this.innerHTML = "On";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
+        gain3.gain.setValueAtTime(1, context.currentTime);
     }   
     playStopActivatedAry[2] = !playStopActivatedAry[2];
 });
@@ -542,8 +552,11 @@ function streamintervallFunction(){
     //getData(1);
     //SourceBuffers[1].start(0);
     if((playStopActivatedAry && sample1.paused && sample2.paused && sample3.paused)){
+        sample1.play();
+        sample2.play();
+        sample3.play();
         if(playStopActivatedAry[0]){
-            sample1.play();
+            
             if(activatedModes[0]){
                 mode1changer1 += 100;
                 if(mode1changer1 > 800){
@@ -561,7 +574,7 @@ function streamintervallFunction(){
         }
     
         if(playStopActivatedAry[1]){
-            sample2.play();
+            
             if(activatedModes[3]){
                 mode1changer2 += 100;
                 if(mode1changer2 > 800){
@@ -579,7 +592,7 @@ function streamintervallFunction(){
         }
     
         if(playStopActivatedAry[2]){
-            sample3.play();
+            
             if(activatedModes[6]){
                 mode1changer3 += 100;
                 if(mode1changer3 > 800){
