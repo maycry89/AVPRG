@@ -89,6 +89,10 @@ var context = new AudioContext(),
     stream2isPlaying = false;
     stream3isPlaying = false;
 
+    filter1.type = "allpass";
+    filter2.type = "allpass";
+    filter3.type = "allpass";
+
     // Hier werden die nodes zusammen gesetzt
     stream1.connect(gain1);
     gain1.connect(waveShaper1);
@@ -284,8 +288,7 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         buttonColor = "white";
         multiplicator -= 3; //Mat: Curve
 
-        filter1.type = "lowpass";
-        filter1.frequency = 3000;
+        filter1.type = "allpass";
         
     } else {  //Wenn an geht       
         this.innerHTML = "Effect 2 on";
@@ -294,7 +297,9 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         buttonColor = "yellow"; 
         multiplicator += 3; //Mat: Curve 
 
-        filter1.type = "allpass";
+        filter1.type = "lowpass";
+        filter1.frequency = 3000;
+
     };
     activatedModes[1] = !activatedModes[1];
 });
@@ -330,7 +335,7 @@ effectModeTwoButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
-        waveShaper1.curve = null;
+        waveShaper2.curve = null;
 
     } else {
         //Wenn an geht
@@ -339,7 +344,7 @@ effectModeTwoButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
-        waveShaper1.curve = makeDistortionCurve(400);
+        waveShaper2.curve = makeDistortionCurve(400);
     }
     
         activatedModes[3] = !activatedModes[3];
@@ -355,12 +360,17 @@ effectModeTwoButtonTwo.addEventListener("click", function() {
         this.style.color = "white"; 
         buttonColor = "white"; 
 
+        filter2.type = "allpass";
+
     } else { //Wenn an geht
    
         this.innerHTML = "Effect 2 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
+
+        filter2.type = "highpass";
+        filter2.frequency = 3000;
     };
     activatedModes[4] = !activatedModes[4];
 });
@@ -411,6 +421,8 @@ effectModeThreeButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";   
+
+        filter3.type = "allpass";
         
     } else {  //Wenn an geht  
 
@@ -418,6 +430,9 @@ effectModeThreeButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";  
+
+        filter3.type = "lowpass";
+        filter3.frequency = 3000;
     };
     activatedModes[7] = !activatedModes[7];
 });
