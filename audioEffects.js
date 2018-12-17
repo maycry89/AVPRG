@@ -541,59 +541,63 @@ submitButton.addEventListener("click", function() {
 function streamintervallFunction(){
     //getData(1);
     //SourceBuffers[1].start(0);
-    if(playStopActivatedAry[0]){
-        sample1.play();
-        if(activatedModes[0]){
-            mode1changer1 += 100;
-            if(mode1changer1 > 800){
-                mode1changer1 = 200;
+    if((playStopActivatedAry && sample1.paused && sample2.paused && sample3.paused)){
+        if(playStopActivatedAry[0]){
+            sample1.play();
+            if(activatedModes[0]){
+                mode1changer1 += 100;
+                if(mode1changer1 > 800){
+                    mode1changer1 = 200;
+                }
+                waveShaper1.curve = makeDistortionCurve(mode1changer1);
             }
-            waveShaper1.curve = makeDistortionCurve(mode1changer1);
+            if(activatedModes[1]){
+                //possible stuff...
+            }
+            if(activatedModes[2]){
+                //mode3changer1 = Math.random()*100;
+                //gain1.value(mode3changer1);
+            }
         }
-        if(activatedModes[1]){
-            //possible stuff...
+    
+        if(playStopActivatedAry[1]){
+            sample2.play();
+            if(activatedModes[3]){
+                mode1changer2 += 100;
+                if(mode1changer2 > 800){
+                    mode1changer2 = 200;
+                }
+                waveShaper2.curve = makeDistortionCurve(mode1changer2);
+            }
+            if(activatedModes[4]){
+                //possible stuff...
+            }
+            if(activatedModes[5]){
+                //mode3changer1 = Math.random()*100;
+                //gain1.value(mode3changer1);
+            }
         }
-        if(activatedModes[2]){
-            //mode3changer1 = Math.random()*100;
-            //gain1.value(mode3changer1);
+    
+        if(playStopActivatedAry[2]){
+            sample3.play();
+            if(activatedModes[6]){
+                mode1changer3 += 100;
+                if(mode1changer3 > 800){
+                    mode1changer3 = 200;
+                }
+                waveShaper3.curve = makeDistortionCurve(mode1changer3);
+            }
+            if(activatedModes[7]){
+                //possible stuff...
+            }
+            if(activatedModes[8]){
+                //mode3changer1 = Math.random()*100;
+                //gain1.value(mode3changer1);
+            }
         }
+
     }
 
-    if(playStopActivatedAry[1]){
-        sample2.play();
-        if(activatedModes[3]){
-            mode1changer2 += 100;
-            if(mode1changer2 > 800){
-                mode1changer2 = 200;
-            }
-            waveShaper2.curve = makeDistortionCurve(mode1changer2);
-        }
-        if(activatedModes[4]){
-            //possible stuff...
-        }
-        if(activatedModes[5]){
-            //mode3changer1 = Math.random()*100;
-            //gain1.value(mode3changer1);
-        }
-    }
-
-    if(playStopActivatedAry[2]){
-        sample3.play();
-        if(activatedModes[6]){
-            mode1changer3 += 100;
-            if(mode1changer3 > 800){
-                mode1changer3 = 200;
-            }
-            waveShaper3.curve = makeDistortionCurve(mode1changer3);
-        }
-        if(activatedModes[7]){
-            //possible stuff...
-        }
-        if(activatedModes[8]){
-            //mode3changer1 = Math.random()*100;
-            //gain1.value(mode3changer1);
-        }
-    }
 
     //Alternative hier
     //playSound(1);
