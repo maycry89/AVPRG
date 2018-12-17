@@ -26,8 +26,6 @@ var context = new AudioContext(),
     sample2 = new Audio("sounds/sample2.wav"),
     sample3 = new Audio("sounds/sample3.wav"),
 
-    visualTestCurve = 0, //[!!Nati Test!!]
-    multiplicator = 0,
     request = new XMLHttpRequest(),
 
     stream1 = context.createMediaElementSource(sample1),
@@ -56,6 +54,18 @@ var context = new AudioContext(),
 
     //ab hier referenzen zu grafischen Elementen
     
+    visualTestCurve = 0, //[!!Nati Visual curve!!]
+    multiplikator1 = 0,
+    multiplikator2 = 0,
+    multiplikator3 = 0,
+
+    increaseValueOnOff = 5, //Anstieg kurve on Off
+    increaseVolueEffectOne = 5,
+    increaseVolueEffectTwo = 5,
+    increaseVolueEffectThree = 5,
+
+    
+
     sliders = document.getElementsByClassName("slider"),
     effectButtons = document.getElementsByClassName("effectButton"),
     playStopButtons = document.getElementsByClassName("playStopButton"),
@@ -195,6 +205,7 @@ var buttonColor = "white";
 
 //---PlayStop 1 Button wird gedrückt
 playStopButtonOne.addEventListener("click", function(){ 
+
     if (playStopActivatedAry[0]) { //Wenn aus geht
         //clearInterval(stream1Intervall);      
         this.innerHTML = "Off"; 
@@ -202,8 +213,8 @@ playStopButtonOne.addEventListener("click", function(){
         this.style.color = "white"; 
         buttonColor = "white"; 
         gain1.gain.setValueAtTime(0, context.currentTime);
-
-        multiplicator -= 5; //Mat: Curve
+        visualEffect(1);
+        multiplikator1 -= increaseValueOnOff; //Mat: Curve
 
     } else { //Wenn an geht
         //waveShaper1.curve = makeDistortionCurve(400);
@@ -212,7 +223,8 @@ playStopButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
-        multiplicator += 5; //Mat: Curve
+        multiplikator1 += increaseValueOnOff; //Mat: Curve
+        visualEffect(1);
         //increaseRadius(5); //Mat Curve
         gain1.gain.setValueAtTime(1, context.currentTime);
     }   
@@ -228,6 +240,7 @@ playStopButtonTwo.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
+        multiplikator2 -= increaseValueOnOff;
         gain2.gain.setValueAtTime(0, context.currentTime);
     } else {
 
@@ -235,6 +248,7 @@ playStopButtonTwo.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
+        multiplikator2 += increaseValueOnOff;
         gain2.gain.setValueAtTime(1, context.currentTime);
     }   
     playStopActivatedAry[1] = !playStopActivatedAry[1];
@@ -248,6 +262,7 @@ playStopButtonThree.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
+        multiplikator3 -= increaseValueOnOff;
         gain3.gain.setValueAtTime(0, context.currentTime);
     } else {
 
@@ -255,6 +270,7 @@ playStopButtonThree.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
+        multiplikator3 += increaseValueOnOff;
         gain3.gain.setValueAtTime(1, context.currentTime);
     }   
     playStopActivatedAry[2] = !playStopActivatedAry[2];
@@ -274,7 +290,7 @@ effectModeOneButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
-        multiplicator -= 5; //Mat: Curve
+        multiplikator1 -= increaseVolueEffectOne; //Mat: Curve
         
 
     } else {
@@ -285,7 +301,8 @@ effectModeOneButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
-        multiplicator += 5; //Mat: Curve
+        multiplikator1 += increaseVolueEffectOne; //Mat: Curve
+    
        
     }
     
@@ -301,7 +318,7 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";
-        multiplicator -= 3; //Mat: Curve
+        multiplikator1 -= increaseVolueEffectTwo; //Mat: Curve
 
         filter1.type = "allpass";
         
@@ -310,7 +327,7 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow"; 
-        multiplicator += 3; //Mat: Curve 
+        multiplikator1 += increaseVolueEffectTwo; //Mat: Curve 
 
         filter1.type = "lowpass";
         filter1.frequency = 3000;
@@ -327,7 +344,7 @@ effectModeOneButtonThree.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";
-        
+        multiplikator1 -= increaseVolueEffectThree; //Nat Grafik Kurve
         gainchanger1 = false;
         
     } else {  //Wenn an geht       
@@ -335,7 +352,7 @@ effectModeOneButtonThree.addEventListener("click", function() {
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";  
-        
+        multiplikator1 += increaseVolueEffectThree; //Nati Grafik Kurve
         gainchanger1 = true;
     };
     activatedModes[2] = !activatedModes[2];
@@ -350,6 +367,7 @@ effectModeTwoButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
+        multiplikator2 -= increaseVolueEffectOne; //Nat Grafik Kurve
         waveShaper2.curve = null;
 
     } else {
@@ -359,6 +377,7 @@ effectModeTwoButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
+        multiplikator2 += increaseVolueEffectOne; //Nat Grafik Kurve
         waveShaper2.curve = makeDistortionCurve(400);
     }
     
@@ -374,7 +393,7 @@ effectModeTwoButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
-
+        multiplikator2 -= increaseVolueEffectTwo; //Nat Grafik Kurve
         filter2.type = "allpass";
 
     } else { //Wenn an geht
@@ -383,7 +402,7 @@ effectModeTwoButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
-
+        multiplikator2 += increaseVolueEffectTwo; 
         filter2.type = "highpass";
         filter2.frequency = 3000;
     };
@@ -417,6 +436,7 @@ effectModeThreeButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";  
+        multiplikator3 -= increaseVolueEffectOne;
         waveShaper3.curve = null;       
     } else {   //Wenn an geht
         
@@ -424,7 +444,7 @@ effectModeThreeButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
-
+        multiplikator3 += increaseVolueEffectOne;
         waveShaper3.curve = makeDistortionCurve(400);
     }
         activatedModes[6] = !activatedModes[6];
@@ -687,6 +707,24 @@ isPlaying = !isPlaying;
 */
 
 /* CANVAS */
+
+var effectTwoActive = false;
+
+function visualEffect(numberEffect){
+
+    switch(numberEffect) {
+        case 1: // /On/Off 1 = Splitt off
+            effectTwoActive = !effectTwoActive;
+            break;
+        case 2: //Effect
+            c.styleDot = c.strokeStyle;
+            break;
+    }
+   
+
+
+}
+
 window.onload = function(){
     var canvas = document.getElementById("paper"),
         c = canvas.getContext("2d");
@@ -701,8 +739,13 @@ window.onload = function(){
     var plusMinus = 1;
     var curveCos;
     var radius = 4;
-    var radiusNew = radius +multiplicator;
+    var radiusNew = radius +multiplikator2;
     
+    
+    var dottedSignValue = 15;
+    var splitDotted = 0;
+    c.styleDot = c.strokeStyle;
+
     setInterval(function(){
        
         posX += plusMinus;
@@ -717,25 +760,73 @@ window.onload = function(){
 
           
     // multi = ((visualTestCurve*100000 - 34500)/100); //~ 6.5
-    //    document.getElementById("moveCycle").innerHTML = curveCos + " pos: " + posX + "<br> curvenwert: " + visualTestCurve + "<br>Beispielwerte: " + 3.5*(Math.cos(0 )) + "<br>Jetziger wert: " + curveCos + "<br>multiplikator: " + multiplicator; 
+    //    document.getElementById("moveCycle").innerHTML = curveCos + " pos: " + posX + "<br> curvenwert: " + visualTestCurve + "<br>Beispielwerte: " + 3.5*(Math.cos(0 )) + "<br>Jetziger wert: " + curveCos + "<br>multiplikator: " + multiplikator1; 
 
         c.fillStyle = "rgba(0,0,0,0.05)"; //Bildschirm füllen
         c.fillRect(0,0, canvas.width, canvas.height); //Bildschirm füllen
 
+        
+
+        if (!effectTwoActive){ //Fügt die drei Kugeln wieder zu einer zusammen
+
+            if (splitDotted > 0){
+                splitDotted -= 0.5;
+            
+            c.styleDot = "red";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator1 +50 + splitDotted/2, radius, 0, TWO_PI, false); //x, y, multiplikator1 = radius;
+            c.fill();
+
+            c.fillStyle = "red";
+            c.beginPath();
+            c.arc(posX +splitDotted , curveCos*multiplikator1 +50 , radius, 0, TWO_PI, false); //x, y, multiplikator1 = radius;
+            c.fill();
+
+            c.fillStyle = "red";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator1 +50 - splitDotted/2, radius, 0, TWO_PI, false); //x, y, multiplikator1 = radius;
+            c.fill(); 
+        }
+            c.fillStyle = "red";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator1 +50, radius+multiplikator1, 0, TWO_PI, false); //x, y, multiplikator1 = radius;
+            c.fill();              
+        }
+
+        else { //Teilt die rote Kugeln in drei auf
+            
+            if (splitDotted < dottedSignValue){
+                splitDotted += 0.5;
+            }
+          
+            c.strokeStyle = "red";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator1 +50 + splitDotted/2, radius, 0, TWO_PI, false); //x, y, multiplikator1 = radius;
+            c.fill();
+            c.stroke();
+
+            c.strokeStyle = "red";
+            c.beginPath();
+            c.arc(posX +splitDotted , curveCos*multiplikator1 +50 , radius, 0, TWO_PI, false); //x, y, multiplikator1 = radius;
+            c.fill();
+            c.stroke();
+
+            c.strokeStyle = "red";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator1 +50 - splitDotted/2, radius, 0, TWO_PI, false); //x, y, multiplikator1 = radius;
+            c.fill(); 
+            c.stroke();
+        }
+        
         c.fillStyle = "white";
         c.beginPath();
-        c.arc(posX, curveCos*multiplicator +125, radiusNew, 0, TWO_PI, false); //x, y (Abstand nach Oben unten), multiplicator = radius;
-        c.fill();
-
-        c.fillStyle = "red";
-        c.beginPath();
-        c.arc(posX, curveCos*multiplicator +100, radius+multiplicator, 0, TWO_PI, false); //x, y, multiplicator = radius;
+        c.arc(posX, curveCos*multiplikator2 +120, radiusNew, 0, TWO_PI, false); //x, y (Abstand nach Oben unten), multiplikator1 = radius;
         c.fill();
 
         c.fillStyle = "blue";
-        c.fillRect(posX-10, curveCos*multiplicator +140, 15 + multiplicator ,15 + multiplicator); // x, y, x-weidth, y-lenght 
+        c.fillRect(posX-10, curveCos*multiplikator3 +190, 15 + multiplikator3 ,15 + multiplikator3); // x, y, x-weidth, y-lenght 
 
-        document.getElementById("infoText").innerHTML = "<br> multiplicator * cos + 125: " + curveCos*multiplicator +125  + "<br> radius: " + multiplicator + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
+        document.getElementById("infoText").innerHTML = "<br> multiplikator1 * cos + 125: " + curveCos*multiplikator1 +125  + "<br> radius: " + multiplikator1 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100) +  "<br> multiplikator3 * cos + 125: " + curveCos*multiplikator3 +125  + "<br> radius: " + multiplikator3  + "<br> multiplikator2 * cos + 125: " + curveCos*multiplikator2 +125  + "<br> radius: " + multiplikator2 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
 
     }, 10);
 
