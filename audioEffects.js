@@ -88,6 +88,9 @@ var context = new AudioContext(),
     stream1isPlaying = false;
     stream2isPlaying = false;
     stream3isPlaying = false;
+    gainchanger1 = false;
+    gainchanger2 = false;
+    gainchanger3 = false;
 
     filter1.type = "allpass";
     filter2.type = "allpass";
@@ -325,7 +328,7 @@ effectModeOneButtonThree.addEventListener("click", function() {
         this.style.color = "white"; 
         buttonColor = "white";
         
-        gain1.value(100);
+        gainchanger1 = false;
         
     } else {  //Wenn an geht       
         this.innerHTML = "Effect 3 on";
@@ -333,7 +336,7 @@ effectModeOneButtonThree.addEventListener("click", function() {
         this.style.color = "yellow";  
         buttonColor = "yellow";  
         
-        gain1.value(0);
+        gainchanger1 = true;
     };
     activatedModes[2] = !activatedModes[2];
 });
@@ -560,18 +563,19 @@ function streamintervallFunction(){
         if(playStopActivatedAry[0]){
             
             if(activatedModes[0]){
+                /*
                 mode1changer1 += 100;
                 if(mode1changer1 > 800){
                     mode1changer1 = 200;
                 }
                 waveShaper1.curve = makeDistortionCurve(mode1changer1);
+                */
             }
             if(activatedModes[1]){
                 //possible stuff...
             }
             if(activatedModes[2]){
-                //mode3changer1 = Math.random()*100;
-                //gain1.value(mode3changer1);
+                mode3changer1
             }
         }
     
