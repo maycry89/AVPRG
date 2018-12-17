@@ -320,7 +320,6 @@ effectModeOneButtonOne.addEventListener("click", function(){
         buttonColor = "yellow";
         //multiplikator1 += increaseVolueEffectOne; //Mat: Curve
         visualEffect(2);
-    
        
     }
     
@@ -419,8 +418,10 @@ effectModeTwoButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
-        multiplikator2 -= increaseVolueEffectTwo; //Nat Grafik Kurve
+        visualEffect(7);
+        //multiplikator2 -= increaseVolueEffectTwo; //Nat Grafik Kurve
         filter2.type = "allpass";
+       
 
     } else { //Wenn an geht
    
@@ -428,7 +429,8 @@ effectModeTwoButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
-        multiplikator2 += increaseVolueEffectTwo; 
+        //multiplikator2 += increaseVolueEffectTwo; 
+        visualEffect(7);
         filter2.type = "highpass";
         filter2.frequency = 3000;
     };
@@ -467,6 +469,7 @@ effectModeThreeButtonOne.addEventListener("click", function(){
         this.style.color = "white"; 
         buttonColor = "white";  
         multiplikator3 -= increaseVolueEffectOne;
+        visualEffect(10);
         waveShaper3.curve = null;       
     } else {   //Wenn an geht
         
@@ -475,6 +478,7 @@ effectModeThreeButtonOne.addEventListener("click", function(){
         this.style.color = "yellow";  
         buttonColor = "yellow";
         multiplikator3 += increaseVolueEffectOne;
+        visualEffect(10);
         waveShaper3.curve = makeDistortionCurve(400);
     }
         activatedModes[6] = !activatedModes[6];
@@ -489,7 +493,7 @@ effectModeThreeButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";   
-
+        visualEffect(11);
         filter3.type = "allpass";
         
     } else {  //Wenn an geht  
@@ -498,6 +502,7 @@ effectModeThreeButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";  
+        visualEffect(11);
 
         filter3.type = "lowpass";
         filter3.frequency = 3000;
@@ -1006,13 +1011,13 @@ window.onload = function(){
         }/***************************************** */
         
         if (borderOn){ 
-            c.fillStyle = "blue";
-            c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2);
-            //c.stroke();
+            c.strokeStyle = "blue";
+            c.strokeRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2); // x, y, x-weidth, y-lenght 
+                  
         }        
         else {
             c.fillStyle = "blue";
-            c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2);
+            c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2); // x, y, x-weidth, y-lenght 
             //c.stroke();
         }       
 /*
