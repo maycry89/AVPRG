@@ -33,18 +33,21 @@ var context = new AudioContext(),
     stereoPanner1 = context.createStereoPanner(),
     waveShaper1 = context.createWaveShaper(),
     filter1 = context.createBiquadFilter(),
+    filter12 = context.createBiquadFilter(),
 
     stream2 = context.createMediaElementSource(sample2),
     gain2 = context.createGain(),
     stereoPanner2 = context.createStereoPanner(),
     waveShaper2 = context.createWaveShaper(),
     filter2 = context.createBiquadFilter(),
+    filter22 = context.createBiquadFilter(),
 
     stream3 = context.createMediaElementSource(sample3),
     gain3 = context.createGain(),
     stereoPanner3 = context.createStereoPanner(),
     waveShaper3 = context.createWaveShaper(),
     filter3 = context.createBiquadFilter(),
+    filter32 = context.createBiquadFilter(),
 
     streamIntervall,
     source1, source2, source3, 
@@ -115,19 +118,22 @@ var context = new AudioContext(),
     // Hier werden die nodes zusammen gesetzt
     stream1.connect(gain1);
     gain1.connect(waveShaper1);
-    waveShaper1.connect(filter1);
+    waveShaper1.connect(filter12);
+    filter12.connect(filter1);
     filter1.connect(context.destination);
     //stereoPanner1.connect(context.destination);
 
     stream2.connect(gain2);
     gain2.connect(waveShaper2);
-    waveShaper2.connect(filter2);
+    waveShaper2.connect(filter22);
+    filter22.connect(filter2);
     filter2.connect(context.destination);
     //stereoPanner1.connect(context.destination);
 
     stream3.connect(gain3);
     gain3.connect(waveShaper3);
-    waveShaper3.connect(filter3);
+    waveShaper3.connect(filter32);
+    filter32.connect(filter3);
     filter3.connect(context.destination);
     //stereoPanner1.connect(context.destination);
 
@@ -354,20 +360,24 @@ effectModeOneButtonThree.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";
+        //filter1.detune.value = 0;
         //multiplikator1 -= increaseVolueEffectThree; //Nat Grafik Kurve
         visualEffect(4);
 
-        gainchanger1 = false;
+        filter12.Q.value = 0;
         
     } else {  //Wenn an geht       
         this.innerHTML = "Effect 3 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";  
+        //filter1.detune.value = 25;
         //multiplikator1 += increaseVolueEffectThree; //Nati Grafik Kurve
         visualEffect(4);
 
-        gainchanger1 = true;
+        filter12.Q.value = 25;
+
+        
     };
     activatedModes[2] = !activatedModes[2];
 });
@@ -431,12 +441,16 @@ effectModeTwoButtonThree.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";
+
+        filter22.Q.value = 0;
                                                                
     } else {  //Wenn an geht       
         this.innerHTML = "Effect 3 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";    
+
+        filter22.Q.value = 25;
     };
     activatedModes[5] = !activatedModes[5];
 });
@@ -498,6 +512,8 @@ effectModeThreeButtonThree.addEventListener("click", function() {
         this.style.color = "white"; 
         buttonColor = "white";
 
+        filter32.Q.value = 0;
+
     } else {  //Wenn an geht  
 
         this.innerHTML = "Effect 3 on";
@@ -505,6 +521,7 @@ effectModeThreeButtonThree.addEventListener("click", function() {
         this.style.color = "yellow";  
         buttonColor = "yellow";  
         
+        filter32.Q.value = 25;
     };
     activatedModes[8] = !activatedModes[8];
 });
@@ -609,8 +626,8 @@ function streamintervallFunction(){
                 //possible stuff...
             }
             if(activatedModes[2]){
-                mode3changer1
-            }
+                
+             }
         }
     
         if(playStopActivatedAry[1]){
@@ -721,9 +738,13 @@ isPlaying = !isPlaying;
 */
 
 /* CANVAS */
-
+var radiusIncrease = 2;
+var radiusBlink = 2;
 var radiusRed = 4;
 var effectTwoActive = false;
+var borderOn = false;
+var splitDotted = 0;
+var effectThreeActive = false;
 
 function visualEffect(numberEffect){
 
@@ -735,11 +756,12 @@ function visualEffect(numberEffect){
             multiplikator1 += increaseVolueEffectOne;
             increaseVolueEffectOne *= -1;
             break;
-        case 3: //Effect 1- 2
-            //radiusRed += 2;
+        case 3: //Effect 1- 2    
+            radiusRed += radiusIncrease;
+            radiusIncrease *= -1;
             break;
         case 4: //Effect 1- 3
-
+            effectThreeActive = !effectThreeActive;
             break;
         case 5: //Effect On OFF 2
 
@@ -748,7 +770,7 @@ function visualEffect(numberEffect){
  
             break;
         case 7: //Effect 2- 2
-
+            borderOn = !borderOn;
             break;
         case 8: //Effect 2- 3
 
@@ -784,18 +806,21 @@ window.onload = function(){
     var posY = 50;
     var plusMinus = 1;
     var curveCos;
-    
+    var radiusIncreaseThree = 1;
     var radiusNew = 4 +multiplikator2;
     
     
     var dottedSignValue = 15;
-    var splitDotted = 0;
+    
+
+    var fillTest = c.fillStyle;
+
 
 
     setInterval(function(){
        
         posX += plusMinus;
-        posY += 1;
+        //posY += 1;
         curveCos = (Math.cos(posX * 0.1));
 
         if (posX >= 480 || posX <= 20){
@@ -811,7 +836,26 @@ window.onload = function(){
         c.fillStyle = "rgba(0,0,0,0.05)"; //Bildschirm füllen
         c.fillRect(0,0, canvas.width, canvas.height); //Bildschirm füllen
 
+        if(effectThreeActive){
+
+            radiusRed += radiusBlink;
+
+            if (radiusRed >= 12 || radiusRed <= 2){
+                radiusBlink *= -1;
+            };
+        }
+        else{
+            if(!effectTwoActive){
+                radius = 4;
+            }
+            else{
+                radius = 6;
+            }
+            
+        }
         
+    
+       
 
         if (!effectTwoActive){ //Fügt die drei Kugeln wieder zu einer zusammen
 
@@ -820,51 +864,63 @@ window.onload = function(){
             
             c.fillStyle = "red";
             c.beginPath();
-            c.arc(posX, curveCos*multiplikator1 +50 + splitDotted/2, radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
+            c.arc(posX, curveCos*multiplikator1 +posY + splitDotted/2, radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
             c.fill();
 
             c.fillStyle = "red";
             c.beginPath();
-            c.arc(posX +splitDotted , curveCos*multiplikator1 +50 , radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
+            c.arc(posX +splitDotted , curveCos*multiplikator1 +posY , radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
             c.fill();
 
             c.fillStyle = "red";
             c.beginPath();
-            c.arc(posX, curveCos*multiplikator1 +50 - splitDotted/2, radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
+            c.arc(posX, curveCos*multiplikator1 +posY - splitDotted/2, radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
             c.fill(); 
         }
             c.fillStyle = "red";
             c.beginPath();
-            c.arc(posX, curveCos*multiplikator1 +50, radiusRed+multiplikator1, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
+            c.arc(posX, curveCos*multiplikator1 +posY, radiusRed+multiplikator1, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
             c.fill();              
         }
+
+        
 
         else { //Teilt die rote Kugeln in drei auf
             
             if (splitDotted < dottedSignValue){
                 splitDotted += 0.5;
             }
+
+           
           
             c.fillStyle = "red";
             c.beginPath();
-            c.arc(posX, curveCos*multiplikator1 +50 + splitDotted/2, radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
+            c.arc(posX, curveCos*multiplikator1 +posY + splitDotted/2, radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
             c.fill();
            
             c.fillStyle = "red";
             c.beginPath();
-            c.arc(posX +splitDotted , curveCos*multiplikator1 +50 , radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
+            c.arc(posX +splitDotted , curveCos*multiplikator1 +posY , radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
             c.fill();
         
             c.fillStyle = "red";
             c.beginPath();
-            c.arc(posX, curveCos*multiplikator1 +50 - splitDotted/2, radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
+            c.arc(posX, curveCos*multiplikator1 +posY - splitDotted/2, radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
             c.fill(); 
         }
         
-        c.fillStyle = "white";
-        c.beginPath();
-        c.arc(posX, curveCos*multiplikator2 +120, radiusNew, 0, TWO_PI, false); //x, y (Abstand nach Oben unten), multiplikator1 = radiusRed;
-        c.fill();
+        if (borderOn){ 
+            c.strokeStyle = "white";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator2 +120, radiusNew, 0, TWO_PI, false); //x, y (Abstand nach Oben unten), multiplikator1 = radiusRed;
+            c.stroke();
+        }        
+        else {
+            c.fillStyle = "white";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator2 +120, radiusNew, 0, TWO_PI, false); //x, y (Abstand nach Oben unten), multiplikator1 = radiusRed;
+            c.fill();
+        }      
 
         c.fillStyle = "blue";
         c.fillRect(posX-10, curveCos*multiplikator3 +190, 15 + multiplikator3 ,15 + multiplikator3); // x, y, x-weidth, y-lenght 
@@ -872,16 +928,11 @@ window.onload = function(){
         document.getElementById("infoText").innerHTML = "<br> multiplikator1 * cos + 125: " + curveCos*multiplikator1 +125  + "<br> radiusRed: " + multiplikator1 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100) +  "<br> multiplikator3 * cos + 125: " + curveCos*multiplikator3 +125  + "<br> radiusRed: " + multiplikator3  + "<br> multiplikator2 * cos + 125: " + curveCos*multiplikator2 +125  + "<br> radiusRed: " + multiplikator2 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
 
     }, 10);
-
+    
 
 };
 
-
-
-    c.fillStyle = "white";
-    c.beginPath();
-    c.arc(posX, curveCos*multiplikator2 +120, radiusNew, 0, TWO_PI, false); //x, y (Abstand nach Oben unten), multiplikator1 = radiusRed;
-    c.fill();
+   
 
 
 
