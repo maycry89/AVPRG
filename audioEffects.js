@@ -160,21 +160,21 @@ var buttonColor = "white";
 //---PlayStop 1 Button wird gedrückt
 playStopButtonOne.addEventListener("click", function(){ 
     if (playStopActivatedAry[0]) { //Wenn aus geht
-        clearInterval(stream1Intervall);
-        multiplicator = 0;
-
+        clearInterval(stream1Intervall);      
         this.innerHTML = "Off"; 
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
+        multiplicator = 0;
     } else { //Wenn an geht
-        multiplicator= 5;       
-        stream1Intervall = setInterval(stream1intervallFunction,500);
-
+        //waveShaper1.curve = makeDistortionCurve(400);
+        stream1Intervall = setInterval(stream1intervallFunction,500);  // War das hier auskommentiert??
         this.innerHTML = "On";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
+        //multiplicator = 5;
+        increaseRadius(5); //Mat Curve
     }   
     playStopActivatedAry[0] = !playStopActivatedAry[0];
 });
@@ -230,7 +230,9 @@ effectModeOneButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
-        multiplicator = 0;
+        multiplicator -= 5; //Mat: Curve
+        
+
     } else {
         //sample1.play();
         //Wenn an geht
@@ -239,6 +241,8 @@ effectModeOneButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
+        multiplicator += 5; //Mat: Curve
+       
     }
     
         activatedModes[0] = !activatedModes[0];
@@ -253,6 +257,7 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";
+        multiplicator -= 3; //Mat: Curve
 
         filter1.type = "lowpass";
         filter1.frequency = 3000;
@@ -261,7 +266,8 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.innerHTML = "Effect 2 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
-        buttonColor = "yellow";  
+        buttonColor = "yellow"; 
+        multiplicator += 3; //Mat: Curve 
 
         filter1.type = "allpass";
     };
@@ -477,22 +483,7 @@ effectModeOneButtonOne.addEventListener("mouseout", function() {  //mouse out
 }); 
 */
 
-//Lässt das "active" Textfeld erscheinen wenn Checkbox aktiviert ist
-//checkbox1.addEventListener("onclick", checkFunction1);
-function checkFunction1() {
-    var checkBox1 = document.getElementById("checkMusic");
-    var text = document.getElementById("text");
-    if (checkBox1.checked == true){ //Wenn Checkbox aktiv ist
-        //text.style.display = "inline"; 
-        text.innerHTML ="on"
-        multiplicator= 5;       
-        stream1Intervall = setInterval(stream1intervallFunction,500);
-    } else {
-        text.innerHTML = "off"
-       clearInterval(stream1Intervall);
-       multiplicator = 0;
-    };
-};
+
 
 //Submit Button
 submitButton.addEventListener("click", function() {
@@ -534,7 +525,7 @@ function stream1intervallFunction(){
 
     request.send();
     */
-}
+};
 
 function makeDistortionCurve(amount) {
     var k = typeof amount === 'number' ? amount : 50,
@@ -547,7 +538,8 @@ function makeDistortionCurve(amount) {
       x = i * 2 / n_samples - 1;
       curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
 
-      visualTestCurve = curve[i]; //[Nati Test!!]
+      visualTestCurve = curve[i]; //[Nati: Wert für Curve]
+      
     }
     
 
@@ -567,22 +559,6 @@ function playSounds(buffer, time) {
     source.start(time);
 }
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -618,9 +594,11 @@ window.onload = function(){
     var posY = 50;
     var plusMinus = 1;
     var curveCos;
+    var radius = 4;
+    var radiusNew = radius +multiplicator;
     
     setInterval(function(){
-
+       
         posX += plusMinus;
         posY += 1;
         curveCos = (Math.cos(posX * 0.1));
@@ -628,34 +606,35 @@ window.onload = function(){
         if (posX >= 480 || posX <= 20){
             plusMinus *= -1;
         };
-        
-        
-        if (modeOneIsOn){
-            multiplicator = (visualTestCurve*100000 - 34880);
-         }
-         else {
-            multiplicator = 0;
-        };
-         
-       //multiplicator = (visualTestCurve*100000 - 34880);
-       
 
+    
+
+          
+    // multi = ((visualTestCurve*100000 - 34500)/100); //~ 6.5
     //    document.getElementById("moveCycle").innerHTML = curveCos + " pos: " + posX + "<br> curvenwert: " + visualTestCurve + "<br>Beispielwerte: " + 3.5*(Math.cos(0 )) + "<br>Jetziger wert: " + curveCos + "<br>multiplikator: " + multiplicator; 
-        c.fillStyle = "rgba(0,0,0,0.03)";
-        c.fillRect(0,0, canvas.width, canvas.height);
+
+        c.fillStyle = "rgba(0,0,0,0.05)"; //Bildschirm füllen
+        c.fillRect(0,0, canvas.width, canvas.height); //Bildschirm füllen
 
         c.fillStyle = "white";
         c.beginPath();
-        c.arc(posX, curveCos*multiplicator +125, multiplicator, 0, TWO_PI, false); //x, y, radius
+        c.arc(posX, curveCos*multiplicator +125, radiusNew, 0, TWO_PI, false); //x, y (Abstand nach Oben unten), multiplicator = radius;
         c.fill();
-        //document.getElementById("infoText").innerHTML = "<br> multiplicator: " + curveCos*multiplicator +125 +"<br>mode on?: " + modeOneIsOn; //TEST NATI
 
+        c.fillStyle = "red";
+        c.beginPath();
+        c.arc(posX, curveCos*multiplicator +100, radius+multiplicator, 0, TWO_PI, false); //x, y, multiplicator = radius;
+        c.fill();
 
+        c.fillStyle = "blue";
+        c.fillRect(posX-10, curveCos*multiplicator +140, 15 + multiplicator ,15 + multiplicator); // x, y, x-weidth, y-lenght 
 
-
+        document.getElementById("infoText").innerHTML = "<br> multiplicator * cos + 125: " + curveCos*multiplicator +125  + "<br> radius: " + multiplicator + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
 
     }, 10);
 
+
 };
+
 
 

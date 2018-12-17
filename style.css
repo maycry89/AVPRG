@@ -23,6 +23,12 @@ html, body {
 background-color:#689c68;
 }
 
+.effectButtons {
+    font-size: 1.0em;
+    margin-right: 60px;
+    margin-top:-10px;
+}
+
 .effectButton {
     border-radius: 7px 7px 30px 30px;
     background-color:grey;
@@ -30,7 +36,8 @@ background-color:#689c68;
     color: #e2e5ff;
     font-size: 1.2em;
     width:150px;
-    padding: 0.2em;
+    padding: 0.3em;
+    margin-right: 10px; 
 }
 
 .effectButton:hover {
@@ -103,7 +110,7 @@ div {
 /*Kommentar*/
 #controllContainer {
     position: fixed;
-    margin-left: 50%;
+    margin-left: 52%;
     height: 100%;
     width: 50%;
     text-align: center;
@@ -112,20 +119,16 @@ div {
 }
 
 #visualContainer {
-    border-radius: 40px;
     margin: 0;
     padding: 0;
     width: 50%;
     background-color: #141547;
     position: fixed;
-    height: 300px;
+    height: 100%;
     overflow: auto;
     
 }
 #moveContainer {
- /*   margin-top: 20px;
-    margin-left: 15%; /*   100 / 2 - 20% /2 = 100/2 = 50-20= 30/2 = 15  */
-    
     padding: 0;
     width: 600%;
     background-color: #ffffff;

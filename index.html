@@ -15,8 +15,8 @@
                 <canvas id="paper" width="500" height="250"></canvas>
                <!-- Doppelter output nicht möglich 
                 <span id="detuneDivContainerOutput" class="output"></span>
-            //  <span id="selectedListOutput" class="output"></span>
-            //  <span id="moveCycle" class="output"></span> -->
+            //  <span id="selectedListOutput" class="output"></span>-->
+              <span id="infoText" class="output"></span> 
             </div> 
            
         </div>  
@@ -34,9 +34,9 @@
                 </select>
     
             <!----------------- Checkbox --------------------->
-                <input type="checkbox" id="checkMusic" onclick="checkFunction1()">
+                
                 <button id="playStopButtonOne" class="playStopButton" >Off</button> 
-                <span id="text" >off</span>
+               
                 </div>
               
             <div id="functionContainer">Gain
@@ -53,9 +53,11 @@
                 <span id="detuneOutput" class="output"></span>              
             </div>
             
-            <button id="effectButtonOne" class="effectButton">Effect 1 off</button><!--btn Submit--->
-            <button id="effectButtonTwo" class="effectButton">Effect 2 off</button><!----btn Submit--->
-            <button id="effectButtonThree" class="effectButton">Effect 3 off</button><!--btn Submit----->
+            <div class="effectButtons">
+                <button id="effectButtonOne" class="effectButton">Effect 1 off</button><!--btn Submit--->
+                <button id="effectButtonTwo" class="effectButton">Effect 2 off</button><!----btn Submit--->
+                <button id="effectButtonThree" class="effectButton">Effect 3 off</button><!--btn Submit----->
+            </div>
 <!------------------------------------------------------------------------------------------------------------------------->
             <div id="samplesContainer">Samples
                 <select id="selectList">
@@ -63,24 +65,15 @@
                     <option value="sample2">Sample2</option>
                     <option value="sample3">Sample3</option>                 
                 </select>
-   
-                <!----------------- Checkbox --------------------->
-                <input type="checkbox" id="checkMusic" onclick="checkFunction1()">
+
                 <button id="playStopButtonTwo" class="playStopButton" >Off</button> 
-                <span id="text" >off</span>
+ 
             </div>
-              
-            <div id="functionContainer">Gain
-                <span id="frequencyOutput" class="output">db</span>
-                <input type="range" min="1" max="40" value="1" class="slider" id="frequencySlider">
-                Min: <input type="text" id="frequMin" value="1 ">
-                Max: <input type="text" id="frequMax" value="40">               
-                <button id="submitBtn">Submit</button> <!--btn Submit--->           
-            </div>
-            
-            <button id="effectTwoButtonOne" class="effectButton">Effect 1 off</button><!--btn Submit--->
-            <button id="effectTwoButtonTwo" class="effectButton">Effect 2 off</button><!----btn Submit--->
-            <button id="effectTwoButtonThree" class="effectButton">Effect 3 off</button><!--btn Submit----->
+            <div class="effectButtons">           
+                <button id="effectTwoButtonOne" class="effectButton">Effect 1 off</button><!--btn Submit--->
+                <button id="effectTwoButtonTwo" class="effectButton">Effect 2 off</button><!----btn Submit--->
+                <button id="effectTwoButtonThree" class="effectButton">Effect 3 off</button><!--btn Submit----->
+            </div> 
 <!------------------------------------------------------------------------------------------------------------------------->
         <div id="samplesContainer">Samples
             <select id="selectList">
@@ -89,24 +82,14 @@
                 <option value="sample3">Sample3</option>                 
             </select>
 
-            <!----------------- Checkbox --------------------->
-                <input type="checkbox" id="checkMusic" onclick="checkFunction1()">
                 <button id="playStopButtonThree" class="playStopButton" >Off</button> 
-                <span id="text" >off</span>
-            </div>
-            
-            <div id="functionContainer">Gain
-                <span id="frequencyOutput" class="output">db</span>
-                <input type="range" min="1" max="40" value="1" class="slider" id="frequencySlider">
-                Min: <input type="text" id="frequMin" value="1 ">
-                Max: <input type="text" id="frequMax" value="40">
-            
-                <button id="submitBtn">Submit</button> <!--btn Submit--->           
-            </div>
 
-            <button id="effectThreeButtonOne" class="effectButton">Effect 1 off</button><!--btn Submit--->
-            <button id="effectThreeButtonTwo" class="effectButton">Effect 2 off</button><!----btn Submit--->
-            <button id="effectThreeButtonThree" class="effectButton">Effect 3 off</button><!--btn Submit----->
+            </div>
+            <div class="effectButtons"> 
+                <button id="effectThreeButtonOne" class="effectButton">Effect 1 off</button><!--btn Submit--->
+                <button id="effectThreeButtonTwo" class="effectButton">Effect 2 off</button><!----btn Submit--->
+                <button id="effectThreeButtonThree" class="effectButton">Effect 3 off</button><!--btn Submit----->
+            </div>
 <!------------------------------------------------------------------------------------------------------------------------->
 
             <script src="audioEffects.js"></script>
