@@ -24,7 +24,7 @@ var context = new AudioContext(),
     //hierunter audio api elemente
     sample1 = new Audio("sounds/sample1.wav"),
     sample2 = new Audio("sounds/sample2.wav"),
-    sample2 = new Audio("sounds/sample3.wav"),
+    sample3 = new Audio("sounds/sample3.wav"),
 
     visualTestCurve = 0, //[!!Nati Test!!]
     multiplicator = 0,
@@ -36,7 +36,19 @@ var context = new AudioContext(),
     waveShaper1 = context.createWaveShaper(),
     filter1 = context.createBiquadFilter(),
 
-    stream1Intervall,
+    stream2 = context.createMediaElementSource(sample2),
+    gain2 = context.createGain(),
+    stereoPanner2 = context.createStereoPanner(),
+    waveShaper2 = context.createWaveShaper(),
+    filter2 = context.createBiquadFilter(),
+
+    stream3 = context.createMediaElementSource(sample3),
+    gain3 = context.createGain(),
+    stereoPanner3 = context.createStereoPanner(),
+    waveShaper3 = context.createWaveShaper(),
+    filter3 = context.createBiquadFilter(),
+
+    streamIntervall,
     source1, source2, source3, 
     sourceBuffers = [source1, source2, source3],
 
@@ -75,20 +87,33 @@ var context = new AudioContext(),
     modeTwoIsOn = false;
     stream1isPlaying = false;
     stream2isPlaying = false;
+    stream3isPlaying = false;
 
     // Hier werden die nodes zusammen gesetzt
     stream1.connect(gain1);
     gain1.connect(waveShaper1);
     waveShaper1.connect(filter1);
     filter1.connect(context.destination);
-    stereoPanner1.connect(context.destination);
+    //stereoPanner1.connect(context.destination);
+
+    stream2.connect(gain2);
+    gain2.connect(waveShaper2);
+    waveShaper2.connect(filter2);
+    filter2.connect(context.destination);
+    //stereoPanner1.connect(context.destination);
+
+    stream3.connect(gain3);
+    gain3.connect(waveShaper3);
+    waveShaper3.connect(filter3);
+    filter3.connect(context.destination);
+    //stereoPanner1.connect(context.destination);
 
 
 
     request.open('GET', "sounds/sample1.wav");
     request.responseType = 'arraybuffer';
     
-    
+    streamIntervall = setInterval(streamintervallFunction,5);
 
 
     // WIP FINGER WEG buffer node stuff
@@ -160,7 +185,7 @@ var buttonColor = "white";
 //---PlayStop 1 Button wird gedrückt
 playStopButtonOne.addEventListener("click", function(){ 
     if (playStopActivatedAry[0]) { //Wenn aus geht
-        clearInterval(stream1Intervall);      
+        //clearInterval(stream1Intervall);      
         this.innerHTML = "Off"; 
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
@@ -168,13 +193,13 @@ playStopButtonOne.addEventListener("click", function(){
         multiplicator = 0;
     } else { //Wenn an geht
         //waveShaper1.curve = makeDistortionCurve(400);
-        stream1Intervall = setInterval(stream1intervallFunction,500);  // War das hier auskommentiert??
+        //stream1Intervall = setInterval(stream1intervallFunction,500);  // War das hier auskommentiert??
         this.innerHTML = "On";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
         //multiplicator = 5;
-        increaseRadius(5); //Mat Curve
+        //increaseRadius(5); //Mat Curve
     }   
     playStopActivatedAry[0] = !playStopActivatedAry[0];
 });
@@ -305,6 +330,7 @@ effectModeTwoButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
+        waveShaper1.curve = null;
 
     } else {
         //Wenn an geht
@@ -313,6 +339,7 @@ effectModeTwoButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
+        waveShaper1.curve = makeDistortionCurve(400);
     }
     
         activatedModes[3] = !activatedModes[3];
@@ -493,23 +520,61 @@ submitButton.addEventListener("click", function() {
 
 //DANIEL TEIL -------------------------------------------------------------------------------------------
 
-function stream1intervallFunction(){
+function streamintervallFunction(){
     //getData(1);
     //SourceBuffers[1].start(0);
-    sample1.play();
-    if(activatedModes[0]){
-        mode1changer1 += 100;
-        if(mode1changer1 > 800){
-            mode1changer1 = 200;
+    if(playStopActivatedAry[0]){
+        sample1.play();
+        if(activatedModes[0]){
+            mode1changer1 += 100;
+            if(mode1changer1 > 800){
+                mode1changer1 = 200;
+            }
+            waveShaper1.curve = makeDistortionCurve(mode1changer1);
         }
-        waveShaper1.curve = makeDistortionCurve(mode1changer1);
+        if(activatedModes[1]){
+            //possible stuff...
+        }
+        if(activatedModes[2]){
+            //mode3changer1 = Math.random()*100;
+            //gain1.value(mode3changer1);
+        }
     }
-    if(activatedModes[1]){
-        //possible stuff...
+
+    if(playStopActivatedAry[1]){
+        sample2.play();
+        if(activatedModes[3]){
+            mode1changer2 += 100;
+            if(mode1changer2 > 800){
+                mode1changer2 = 200;
+            }
+            waveShaper2.curve = makeDistortionCurve(mode1changer2);
+        }
+        if(activatedModes[4]){
+            //possible stuff...
+        }
+        if(activatedModes[5]){
+            //mode3changer1 = Math.random()*100;
+            //gain1.value(mode3changer1);
+        }
     }
-    if(activatedModes[2]){
-        //mode3changer1 = Math.random()*100;
-        //gain1.value(mode3changer1);
+
+    if(playStopActivatedAry[2]){
+        sample3.play();
+        if(activatedModes[6]){
+            mode1changer3 += 100;
+            if(mode1changer3 > 800){
+                mode1changer3 = 200;
+            }
+            waveShaper3.curve = makeDistortionCurve(mode1changer3);
+        }
+        if(activatedModes[7]){
+            //possible stuff...
+        }
+        if(activatedModes[8]){
+            //mode3changer1 = Math.random()*100;
+            //gain1.value(mode3changer1);
+        }
     }
 
     //Alternative hier
