@@ -237,7 +237,7 @@ playStopButtonOne.addEventListener("click", function(){
         buttonColor = "yellow";
         multiplikator1 += increaseValueOnOff; //Mat: Curve
         visualEffect(1);
-        //increaseRadius(5); //Mat Curve
+ 
         gain1.gain.setValueAtTime(1, context.currentTime);
     }   
     playStopActivatedAry[0] = !playStopActivatedAry[0];
@@ -252,6 +252,7 @@ playStopButtonTwo.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
+        visualEffect(5);
         multiplikator2 -= increaseValueOnOff;
         gain2.gain.setValueAtTime(0, context.currentTime);
     } else {
@@ -260,7 +261,8 @@ playStopButtonTwo.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
-        multiplikator2 += increaseValueOnOff;
+       multiplikator2 += increaseValueOnOff;
+       visualEffect(5);
         gain2.gain.setValueAtTime(1, context.currentTime);
     }   
     playStopActivatedAry[1] = !playStopActivatedAry[1];
@@ -275,6 +277,7 @@ playStopButtonThree.addEventListener("click", function(){
         this.style.color = "white"; 
         buttonColor = "white"; 
         multiplikator3 -= increaseValueOnOff;
+        visualEffect(9);
         gain3.gain.setValueAtTime(0, context.currentTime);
     } else {
 
@@ -283,6 +286,7 @@ playStopButtonThree.addEventListener("click", function(){
         this.style.color = "yellow";  
         buttonColor = "yellow";
         multiplikator3 += increaseValueOnOff;
+        visualEffect(9);
         gain3.gain.setValueAtTime(1, context.currentTime);
     }   
     playStopActivatedAry[2] = !playStopActivatedAry[2];
@@ -334,7 +338,6 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         buttonColor = "white";
         visualEffect(3);
         //multiplikator1 -= increaseVolueEffectTwo; //Mat: Curve
-
         filter1.type = "allpass";
         
     } else {  //Wenn an geht       
@@ -344,7 +347,6 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         buttonColor = "yellow"; 
         //multiplikator1 += increaseVolueEffectTwo; //Mat: Curve 
         visualEffect(3);
-
         filter1.type = "lowpass";
         filter1.frequency = 3000;
 
@@ -441,7 +443,7 @@ effectModeTwoButtonThree.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";
-
+        visualEffect(8);
         filter22.Q.value = 0;
                                                                
     } else {  //Wenn an geht       
@@ -449,7 +451,7 @@ effectModeTwoButtonThree.addEventListener("click", function() {
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";    
-
+        visualEffect(8);
         filter22.Q.value = 25;
     };
     activatedModes[5] = !activatedModes[5];
@@ -511,7 +513,7 @@ effectModeThreeButtonThree.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";
-
+        visualEffect(12);
         filter32.Q.value = 0;
 
     } else {  //Wenn an geht  
@@ -520,7 +522,7 @@ effectModeThreeButtonThree.addEventListener("click", function() {
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";  
-        
+        visualEffect(12);
         filter32.Q.value = 25;
     };
     activatedModes[8] = !activatedModes[8];
@@ -722,29 +724,35 @@ function playSounds(buffer, time) {
 
 /**Nati Teil: ***********************************************  Visual Effects ***********************/
 
-/**Button Three */
-/*
-var isPlaying = false;
-modeButtonThree.addEventListener("click", function () {
-if (isPlaying) {            
-    modeButtonThree.innerHTML = "Play";
-    
-} else {       
-    modeButtonThree.innerHTML = "Stop";
-    sample1.play();
-}
-isPlaying = !isPlaying;
-});
-*/
+
 
 /* CANVAS */
 var radiusIncrease = 2;
-var radiusBlink = 2;
+var radiusBlink = 0.2;
 var radiusRed = 4;
+
+var radiusIncreaseWhite = 2;
+var radiusBlinkWhite = 0.2;
+var radiusWhite = 4;
+
+var radiusIncreaseBlue = 2;
+var radiusBlinkBlue = 0.2;
+var rectSize = 15;
+
+var effectThreeActive = false;
+var effectThreeActiveWhite = false;
+var effectThreeActiveBlue = false;
+
 var effectTwoActive = false;
+var effectTwoActiveWhite = false;
+var onOffEffectThree = false;
+
+var onOffEffectBlue = false;
+
 var borderOn = false;
 var splitDotted = 0;
-var effectThreeActive = false;
+var splitDottedWhite = 0;
+
 
 function visualEffect(numberEffect){
 
@@ -764,6 +772,7 @@ function visualEffect(numberEffect){
             effectThreeActive = !effectThreeActive;
             break;
         case 5: //Effect On OFF 2
+            onOffEffectBlue = !onOffEffectBlue;
 
             break;
         case 6: //Effect 2- 1
@@ -773,10 +782,10 @@ function visualEffect(numberEffect){
             borderOn = !borderOn;
             break;
         case 8: //Effect 2- 3
-
+            effectThreeActiveBlue = !effectThreeActiveBlue;
             break;
         case 9: //Effect On OFF 3
-
+            onOffEffectThree = !onOffEffectThree;
             break;
         case 10: //Effect 3- 1
 
@@ -785,7 +794,7 @@ function visualEffect(numberEffect){
 
             break;
         case 12: //Effect 3- 3
-
+            effectThreeActiveWhite = !effectThreeActiveWhite;
             break;
     }
    
@@ -804,17 +813,22 @@ window.onload = function(){
     
     var posX = 40;
     var posY = 50;
+    var posBlue = 120;
+    var posWhite = 160;
     var plusMinus = 1;
     var curveCos;
-    var radiusIncreaseThree = 1;
-    var radiusNew = 4 +multiplikator2;
+    var radius = 4;
+    var radiusW = 4;
+
+    
+
+   // var radiusNew = 4 +multiplikator2;
     
     
     var dottedSignValue = 15;
     
 
-    var fillTest = c.fillStyle;
-
+    
 
 
     setInterval(function(){
@@ -836,25 +850,59 @@ window.onload = function(){
         c.fillStyle = "rgba(0,0,0,0.05)"; //Bildschirm füllen
         c.fillRect(0,0, canvas.width, canvas.height); //Bildschirm füllen
 
+
         if(effectThreeActive){
 
             radiusRed += radiusBlink;
 
-            if (radiusRed >= 12 || radiusRed <= 2){
+            if (radiusRed >= 8 || radiusRed <= 3){
                 radiusBlink *= -1;
             };
         }
         else{
             if(!effectTwoActive){
-                radius = 4;
+                radiusRed = radius + radiusIncrease;
             }
             else{
-                radius = 6;
+                radius = 4;
             }
             
         }
         
-    
+        if(effectThreeActiveWhite){
+
+            radiusWhite += radiusBlinkWhite;
+
+            if (radiusWhite >= 8 || radiusWhite <= 3){
+                radiusBlinkWhite *= -1;
+            };
+        }
+        else{
+            if(!effectTwoActiveWhite){
+                radiusWhite = radiusW + radiusIncreaseWhite;
+            }
+            else{
+                radiusW = 4;
+            }
+            
+        }
+
+
+        if(effectThreeActiveBlue){
+
+            rectSize += radiusBlinkBlue;
+
+            if (rectSize >= 20 || rectSize <= 8){
+                radiusBlinkBlue *= -1;
+            };
+        }
+        else{
+            
+            rectSize = 15 + radiusIncreaseBlue;
+           
+        }
+
+
        
 
         if (!effectTwoActive){ //Fügt die drei Kugeln wieder zu einer zusammen
@@ -864,7 +912,7 @@ window.onload = function(){
             
             c.fillStyle = "red";
             c.beginPath();
-            c.arc(posX, curveCos*multiplikator1 +posY + splitDotted/2, radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
+            c.arc(posX, curveCos*multiplikator1 +posY + splitDotted/2, radiusRed , 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
             c.fill();
 
             c.fillStyle = "red";
@@ -891,7 +939,6 @@ window.onload = function(){
                 splitDotted += 0.5;
             }
 
-           
           
             c.fillStyle = "red";
             c.beginPath();
@@ -908,24 +955,71 @@ window.onload = function(){
             c.arc(posX, curveCos*multiplikator1 +posY - splitDotted/2, radiusRed, 0, TWO_PI, false); //x, y, multiplikator1 = radiusRed;
             c.fill(); 
         }
+        /************************************************************************************************* */
         
-        if (borderOn){ 
-            c.strokeStyle = "white";
-            c.beginPath();
-            c.arc(posX, curveCos*multiplikator2 +120, radiusNew, 0, TWO_PI, false); //x, y (Abstand nach Oben unten), multiplikator1 = radiusRed;
-            c.stroke();
-        }        
-        else {
+        if (!onOffEffectThree){ //Fügt die drei Kugeln wieder zu einer zusammen
+
+            if (splitDottedWhite > 0){
+                splitDottedWhite -= 0.5;
+            
             c.fillStyle = "white";
             c.beginPath();
-            c.arc(posX, curveCos*multiplikator2 +120, radiusNew, 0, TWO_PI, false); //x, y (Abstand nach Oben unten), multiplikator1 = radiusRed;
+            c.arc(posX, curveCos*multiplikator3 +posY+posWhite + splitDottedWhite/2, radiusWhite , 0, TWO_PI, false); //x, y, multiplikator2 = radiusWhite;
             c.fill();
-        }      
 
+            c.fillStyle = "white";
+            c.beginPath();
+            c.arc(posX +splitDottedWhite , curveCos*multiplikator3 +posY+posWhite , radiusWhite, 0, TWO_PI, false); //x, y, multiplikator2 = radiusWhite;
+            c.fill();
+
+            c.fillStyle = "white";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator3 +posY+posWhite - splitDottedWhite/2, radiusWhite, 0, TWO_PI, false); //x, y, multiplikator2 = radiusWhite;
+            c.fill(); 
+        }
+            c.fillStyle = "white";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator3 +posY+posWhite, radiusWhite+multiplikator3, 0, TWO_PI, false); //x, y, multiplikator2 = radiusWhite;
+            c.fill();              
+        }
+
+        else { //Teilt die weiße Kugeln in drei auf
+            
+            if (splitDottedWhite < dottedSignValue){
+                splitDottedWhite += 0.5;
+            }
+
+            c.fillStyle = "white";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator3 +posY+posWhite + splitDottedWhite/2, radiusWhite, 0, TWO_PI, false); //x, y, multiplikator2 = radiusRed;
+            c.fill();
+           
+            c.fillStyle = "white";
+            c.beginPath();
+            c.arc(posX +splitDottedWhite , curveCos*multiplikator3 +posY+posWhite , radiusWhite, 0, TWO_PI, false); //x, y, multiplikator2 = radiusRed;
+            c.fill();
+        
+            c.fillStyle = "white";
+            c.beginPath();
+            c.arc(posX, curveCos*multiplikator3 +posY+posWhite - splitDottedWhite/2, radiusWhite, 0, TWO_PI, false); //x, y, multiplikator2 = radiusRed;
+            c.fill(); 
+        }/***************************************** */
+        
+        if (borderOn){ 
+            c.fillStyle = "blue";
+            c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2);
+            //c.stroke();
+        }        
+        else {
+            c.fillStyle = "blue";
+            c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2);
+            //c.stroke();
+        }       
+/*
         c.fillStyle = "blue";
-        c.fillRect(posX-10, curveCos*multiplikator3 +190, 15 + multiplikator3 ,15 + multiplikator3); // x, y, x-weidth, y-lenght 
-
-        document.getElementById("infoText").innerHTML = "<br> multiplikator1 * cos + 125: " + curveCos*multiplikator1 +125  + "<br> radiusRed: " + multiplikator1 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100) +  "<br> multiplikator3 * cos + 125: " + curveCos*multiplikator3 +125  + "<br> radiusRed: " + multiplikator3  + "<br> multiplikator2 * cos + 125: " + curveCos*multiplikator2 +125  + "<br> radiusRed: " + multiplikator2 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
+        c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2); // x, y, x-weidth, y-lenght 
+*/
+        document.getElementById("infoText").innerHTML = "<br> multiplikator1 * cos + 125: "  + curveCos*multiplikator1 +125  + "<br> radiusRed: " + multiplikator1 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100) +  "<br> multiplikator3 * cos + 125: " + curveCos*multiplikator3 +125  + "<br> radiusRed: " + multiplikator3  + "<br> multiplikator2 * cos + 125: " + curveCos*multiplikator2 +125  + "<br> radiusRed: " + multiplikator2 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
 
     }, 10);
     
