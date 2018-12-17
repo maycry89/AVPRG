@@ -401,13 +401,16 @@ effectModeThreeButtonOne.addEventListener("click", function(){
         this.innerHTML = "Effect 1 off"; 
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
-        buttonColor = "white";         
+        buttonColor = "white";  
+        waveShaper3.curve = null;       
     } else {   //Wenn an geht
         
         this.innerHTML = "Effect 1 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
+
+        waveShaper3.curve = makeDistortionCurve(400);
     }
         activatedModes[6] = !activatedModes[6];
 
