@@ -198,8 +198,10 @@ playStopButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
-        multiplicator = 0;
         gain1.gain.setValueAtTime(0, context.currentTime);
+
+        multiplicator -= 5; //Mat: Curve
+
     } else { //Wenn an geht
         //waveShaper1.curve = makeDistortionCurve(400);
         //stream1Intervall = setInterval(stream1intervallFunction,500);  // War das hier auskommentiert??
@@ -207,7 +209,7 @@ playStopButtonOne.addEventListener("click", function(){
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
-        //multiplicator = 5;
+        multiplicator += 5; //Mat: Curve
         //increaseRadius(5); //Mat Curve
         gain1.gain.setValueAtTime(1, context.currentTime);
     }   
