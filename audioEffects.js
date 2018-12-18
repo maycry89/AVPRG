@@ -380,7 +380,6 @@ effectModeOneButtonThree.addEventListener("click", function() {
 
         filter12.Q.value = 25;
 
-        
     };
     activatedModes[2] = !activatedModes[2];
 });
@@ -617,7 +616,7 @@ submitButton.addEventListener("click", function() {
 function streamintervallFunction(){
     //getData(1);
     //SourceBuffers[1].start(0);
-    if((playStopActivatedAry && sample1.paused && sample2.paused && sample3.paused)){
+    if((sample1.paused && sample2.paused && sample3.paused)){
         sample1.play();
         sample2.play();
         sample3.play();
@@ -695,6 +694,10 @@ function streamintervallFunction(){
 };
 
 function makeDistortionCurve(amount) {
+    //var real = new Float32Array([0,0,1,0,1]);
+    //var imag = new Float32Array(real.length);
+    //var curve = context.createPeriodicWave(real,imag);
+    
     var k = typeof amount === 'number' ? amount : 50,
       n_samples = 5,
       curve = new Float32Array(n_samples),
@@ -703,13 +706,14 @@ function makeDistortionCurve(amount) {
       x;
     for ( ; i < n_samples; ++i ) {
       x = i * 2 / n_samples - 1;
-      curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
+      curve[i] = ( 0 + k ) * x * 10 * deg / ( Math.PI + k * Math.abs(x) );
 
       visualTestCurve = curve[i]; //[Nati: Wert für Curve]
       
     }
     
 
+    
     return curve;
   };
 
