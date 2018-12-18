@@ -98,8 +98,8 @@ var context = new AudioContext(),
 
     submitButton = document.getElementById("submitBtn"),
     selectList =document.getElementById("selectList"), 
-    valueFreqMin = document.getElementById("frequMin"),
-    valueFreqMax = document.getElementById("frequMax"); 
+//  valueFreqMin = document.getElementById("frequMin"),
+//  valueFreqMax = document.getElementById("frequMax"); 
 
     activatedModes = [];
     modeOneIsOn = false;
@@ -604,10 +604,11 @@ effectModeOneButtonOne.addEventListener("mouseout", function() {  //mouse out
 
 
 //Submit Button
+/*
 submitButton.addEventListener("click", function() {
     document.getElementById("frequencySlider").min = valueFreqMin.value;
     document.getElementById("frequencySlider").max = valueFreqMax.value;
-})
+}) */
 
 //DANIEL TEIL -------------------------------------------------------------------------------------------
 
@@ -758,6 +759,8 @@ var borderOn = false;
 var splitDotted = 0;
 var splitDottedWhite = 0;
 
+var splitRect = 0;
+
 
 function visualEffect(numberEffect){
 
@@ -818,7 +821,7 @@ window.onload = function(){
     
     var posX = 40;
     var posY = 50;
-    var posBlue = 120;
+    var posBlue = 130;
     var posWhite = 160;
     var plusMinus = 1;
     var curveCos;
@@ -1010,21 +1013,104 @@ window.onload = function(){
             c.fill(); 
         }/***************************************** */
         
-        if (borderOn){ 
-            c.strokeStyle = "blue";
-            c.strokeRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2); // x, y, x-weidth, y-lenght 
-                  
+        if (onOffEffectBlue){
+
+            if (splitRect < 10){
+                splitRect += 0.2;
+            }
+
+            if (!borderOn){
+
+                c.fillStyle = "blue";
+                c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2) -splitRect, rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2); // x, y, x-weidth, y-lenght 
+
+                c.fillStyle = "blue";
+                c.fillRect(posX-(rectSize/2) + splitRect, curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);
+
+                c.fillStyle = "blue";
+                c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2) +splitRect, rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);
+
+                c.fillStyle = "blue";
+                c.fillRect(posX-(rectSize/2) -splitRect, curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);               
+            }
+            else {
+
+                c.strokeStyle = "blue";
+                c.strokeRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2) -splitRect, rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2); // x, y, x-weidth, y-lenght 
+    
+                c.strokeStyle = "blue";
+                c.strokeRect(posX-(rectSize/2) + splitRect, curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);
+    
+                c.strokeStyle = "blue";
+                c.strokeRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2) +splitRect, rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);
+    
+                c.strokeStyle = "blue";
+                c.strokeRect(posX-(rectSize/2) -splitRect, curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);
+            }
+                 
         }        
         else {
-            c.fillStyle = "blue";
-            c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2); // x, y, x-weidth, y-lenght 
-            //c.stroke();
+
+            if (splitRect > 4){
+                splitRect -= 0.5; 
+
+                if(!borderOn){
+                    c.fillStyle = "blue";
+                    c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2) -splitRect, rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2); // x, y, x-weidth, y-lenght 
+
+                    c.fillStyle = "blue";
+                    c.fillRect(posX-(rectSize/2) + splitRect, curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);
+
+                    c.fillStyle = "blue";
+                    c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2) +splitRect, rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);
+
+                    c.fillStyle = "blue";
+                    c.fillRect(posX-(rectSize/2) -splitRect, curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2); 
+                }
+
+                else{
+                    c.strokeStyle = "blue";
+                    c.strokeRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2) -splitRect, rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2); // x, y, x-weidth, y-lenght 
+    
+                    c.strokeStyle = "blue";
+                    c.strokeRect(posX-(rectSize/2) + splitRect, curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);
+    
+                    c.strokeStyle = "blue";
+                    c.strokeRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2) +splitRect, rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);
+    
+                    c.strokeStyle = "blue";
+                    c.strokeRect(posX-(rectSize/2) -splitRect, curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);
+                }
+                
+            }
+
+            else{
+
+                if(!borderOn){
+
+                c.fillStyle = "blue";
+                c.fillRect(posX-(rectSize/2) , curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2);
+
+                }
+                else{
+                c.strokeStyle = "blue";
+                c.strokeRect(posX-(rectSize/2) , curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2);
+
+                }
+            }
+            
+    
+           
+
+          
+      
+            
         }       
 /*
         c.fillStyle = "blue";
         c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2); // x, y, x-weidth, y-lenght 
 */
-        document.getElementById("infoText").innerHTML = "<br> multiplikator1 * cos + 125: "  + curveCos*multiplikator1 +125  + "<br> radiusRed: " + multiplikator1 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100) +  "<br> multiplikator3 * cos + 125: " + curveCos*multiplikator3 +125  + "<br> radiusRed: " + multiplikator3  + "<br> multiplikator2 * cos + 125: " + curveCos*multiplikator2 +125  + "<br> radiusRed: " + multiplikator2 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
+        document.getElementById("infoText").innerHTML = "<br> multiplikator1 * cos + 125: "  + curveCos*multiplikator1 +125  + "<br> radiusRed: " + multiplikator1 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100) +  "<br> multiplikator3 * cos + 125: " + curveCos*multiplikator3 +125  + "<br> radiusRed: " + multiplikator3  + "<br> multiplikator2 * cos + 125: " + curveCos*multiplikator2 +125  + "<br> radiusBlue: " + multiplikator2 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
 
     }, 10);
     
