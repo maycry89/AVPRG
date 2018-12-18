@@ -5,119 +5,6 @@ html, body {
     color: #d8d6c2;
 }
 
-.playStopButton {
-    border-radius: 40px;
-    background-color:grey;
-    border: none;
-    color: #e2e5ff;
-    font-size: 1.5em;
-    width:100px;
-    padding: 0.2em;
-}
-
-.playStopButton:hover {
-    color: #b4f8c0;
-}
-
-.playStopButton:active {
-background-color:#689c68;
-}
-
-.effectButtons {
-    font-size: 1.0em;
-    margin-right: 60px;
-    margin-top:-10px;
-}
-
-.effectButton {
-    border-radius: 7px 7px 30px 30px;
-    background-color:grey;
-    border: none;
-    color: #e2e5ff;
-    font-size: 1.2em;
-    width:150px;
-    padding: 0.3em;
-    margin-right: 10px; 
-}
-
-.effectButton:hover {
-    color: #b4f8c0;
-}
-
-.effectButton:active {
-background-color:#689c68;
-}
-
-
-
-div {
-    padding :10px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.2em;
-}
-
-#functionContainer {
-    
-    background: #3244a7;
-    width: 85%;
-    border-style: solid;
-    border-color: #161d44;
-}
-
-
-#samplesContainer {
-    border-radius: 30px 30px 10px 10px;
-    background: #b18df5;
-    width: 85%;
-    border-style: solid;
-    border-color: #161d44;
-}
-
-#selectList {
-    margin-top: 1em;
-    margin-bottom: 1em;
-    font-size: 0.8em;
-}
-
-.slider {
-    margin: 0;
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 25px;
-    background: #000000;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-}
-
-.slider:hover {
-    opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    background: #303bc3;
-    cursor: pointer;
-}
-
-
-    
-/*Kommentar*/
-#controllContainer {
-    position: fixed;
-    margin-left: 52%;
-    height: 100%;
-    width: 50%;
-    text-align: center;
-    overflow: auto;
-    
-}
-
 #visualContainer {
     margin: 0;
     padding: 0;
@@ -135,6 +22,100 @@ div {
     position: fixed; 
     overflow: auto;
 }
+
+.playStopButton {
+    border-radius: 5px 60px 60px 5px;
+    border-style: solid;
+    border-color: black;
+    background-color:grey;
+    color: #e2e5ff;
+    font-size: 1.3em;
+    width:120px;
+    padding: 0.2em;
+}
+
+.playStopButton:hover {
+    color: #b4f8c0;
+}
+
+.playStopButton:active {
+background-color:#689c68;
+}
+
+
+
+.effectButton {
+    border-radius: 5px 5px 30px 30px;
+    background-color:grey;
+    border: none;
+    color: #e2e5ff;
+    font-size: 1.2em;
+    width:26%;
+    padding: 0.3em;
+    margin-right: 2%; 
+}
+
+.effectButton:hover {
+    color: #b4f8c0;
+}
+
+.effectButton:active {
+background-color:#689c68;
+}
+
+div {
+    padding :10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
+}
+
+/*
+#functionContainer { 
+    background: #3244a7;
+    width: 85%;
+    border-style: solid;
+    border-color: #161d44;
+}
+*/
+
+/*Kommentar*/
+#controllContainer {
+    position: fixed;
+    margin-left: 50%;
+    height: 100%;
+    width: 50%;
+    text-align: center;
+    overflow: auto;
+    
+}
+
+.samplesContainer {
+    border-radius: 80px 80px 10px 10px;
+    background: #516cc4;
+    width: 80%;
+    margin-left: 7%;
+    border-style: solid;
+    border-color: #161d44;
+}
+
+#sampleRed{
+    background: #a85783
+}
+#sampleBlue{
+    background: #6f7ff7
+}
+#sampleWhite{
+    background: #c0c7ff
+}
+
+
+.effectButtons {
+    font-size: 1.0em;
+    margin-top:-10px;
+    text-align: center;
+}
+
+
 
 
 

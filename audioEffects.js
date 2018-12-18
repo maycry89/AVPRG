@@ -96,8 +96,8 @@ var context = new AudioContext(),
     
     playStopActivatedAry = [];
 
-    submitButton = document.getElementById("submitBtn"),
-    selectList =document.getElementById("selectList"), 
+//    submitButton = document.getElementById("submitBtn"),
+//    selectList =document.getElementById("selectList"), 
 //  valueFreqMin = document.getElementById("frequMin"),
 //  valueFreqMax = document.getElementById("frequMax"); 
 
@@ -170,16 +170,18 @@ for (var i = 0; i < sliders.length; i++) {
     sliders[i].addEventListener("mousemove", changeParameter);
 }
 /* DropDownMenü */
+/*
 selectList.addEventListener("change", function() {
     var name = selectList.options[selectList.selectedIndex].value;
-//    document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // */Wert aus der Liste: selectList.options[selectList.selectedIndex].value;   
+//    document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // Wert aus der Liste: selectList.options[selectList.selectedIndex].value;   
     sample1 = new Audio("sounds/" + name + ".wav");
     stream1 = context.createMediaElementSource(sample1);
     stream1.connect(gain1);
  //   sample1 = new Audio("sounds/sample2.wav");
-//    loadImpulseResponse(name); //Führt Funktion loadImpulseResponse mit der ausgewählten Datei aus
+//    loadImpulseResponse(name); //Führt Funktion loadImpulseResponse mit der ausgewählten Datei aus 
         
-});
+}); 
+*/
 
 function changeParameter() {
 
