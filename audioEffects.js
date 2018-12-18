@@ -801,7 +801,8 @@ function visualEffect(numberEffect){
 
             break;
         case 11: //Effect 3- 2
-
+            radiusWhite += radiusIncreaseWhite;
+            radiusIncreaseWhite *= -1;
             break;
         case 12: //Effect 3- 3
             effectThreeActiveWhite = !effectThreeActiveWhite;
@@ -1112,7 +1113,7 @@ window.onload = function(){
         c.fillStyle = "blue";
         c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2); // x, y, x-weidth, y-lenght 
 */
-        document.getElementById("infoText").innerHTML = "<br> multiplikator1 * cos + 125: "  + curveCos*multiplikator1 +125  + "<br> radiusRed: " + multiplikator1 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100) +  "<br> multiplikator3 * cos + 125: " + curveCos*multiplikator3 +125  + "<br> radiusRed: " + multiplikator3  + "<br> multiplikator2 * cos + 125: " + curveCos*multiplikator2 +125  + "<br> radiusBlue: " + multiplikator2 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
+ //       document.getElementById("infoText").innerHTML = "<br> multiplikator1 * cos + 125: "  + curveCos*multiplikator1 +125  + "<br> radiusRed: " + multiplikator1 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100) +  "<br> multiplikator3 * cos + 125: " + curveCos*multiplikator3 +125  + "<br> radiusRed: " + multiplikator3  + "<br> multiplikator2 * cos + 125: " + curveCos*multiplikator2 +125  + "<br> radiusBlue: " + multiplikator2 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
 
     }, 10);
     

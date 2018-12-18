@@ -6,22 +6,18 @@ html, body {
 }
 
 #visualContainer {
-    margin: 0;
-    padding: 0;
-    width: 50%;
-    background-color: #141547;
+    border-radius: 60px;
+    margin-top: 20px;
+    padding-top: 60px;
+    width: 42%;
+    background-color: #363775;
     position: fixed;
-    height: 100%;
+    height: 350px;
     overflow: auto;
+    margin-left:5%;
     
 }
-#moveContainer {
-    padding: 0;
-    width: 600%;
-    background-color: #ffffff;
-    position: fixed; 
-    overflow: auto;
-}
+
 
 .playStopButton {
     border-radius: 5px 60px 60px 5px;
@@ -42,17 +38,22 @@ html, body {
 background-color:#689c68;
 }
 
-
-
 .effectButton {
     border-radius: 5px 5px 30px 30px;
     background-color:grey;
     border: none;
     color: #e2e5ff;
     font-size: 1.2em;
-    width:26%;
-    padding: 0.3em;
-    margin-right: 2%; 
+    width:30%;
+    margin-left: -10;
+    margin-right: 10px;
+    padding: 7px;
+    
+
+}
+
+#effectButtonOne, #effectTwoButtonOne, #effectThreeButtonOne{
+    border-radius: 5px 5px 30px 5px;
 }
 
 .effectButton:hover {
@@ -69,31 +70,23 @@ div {
     font-size: 1.2em;
 }
 
-/*
-#functionContainer { 
-    background: #3244a7;
-    width: 85%;
-    border-style: solid;
-    border-color: #161d44;
-}
-*/
 
 /*Kommentar*/
 #controllContainer {
     position: fixed;
     margin-left: 50%;
+    margin-top: 40px;
     height: 100%;
     width: 50%;
-    text-align: center;
     overflow: auto;
+    float: right;
     
 }
 
 .samplesContainer {
-    border-radius: 80px 80px 10px 10px;
+    border-radius: 10px 80px 10px 10px;
     background: #516cc4;
     width: 80%;
-    margin-left: 7%;
     border-style: solid;
     border-color: #161d44;
 }
@@ -110,11 +103,26 @@ div {
 
 
 .effectButtons {
+
     font-size: 1.0em;
     margin-top:-10px;
-    text-align: center;
+    margin-left:-7px;
+    width: 87%;
+    text-align: left;
 }
 
+#paper {
+    border-radius: 30px;
+    border-style: solid;
+    border-color: #b98393;
+    margin:10px;
+
+}
+
+#musificator{
+    font-size: 3.0em;
+    color: #8aaff3;
+}
 
 
 
