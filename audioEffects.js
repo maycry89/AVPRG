@@ -1,27 +1,7 @@
-//Kommentar hinter der Zeile
-
-/* Kommentar über dem Absatz 
-----------
------------ TEEEST
-*/
-
-// !!! Änderung Name
-// ??? Warum ist das so ????
-
-// [Nur für mich]
-
-/* [Kommentar über dem Absatz ]
-----------
------------
-*/
-
-//Button nameBtn
-//
-
-/**BUG: Erst den effect off knopf an und aus stellen - danach den hauptknopf */
-
 var context = new AudioContext(),
-    //hierunter audio api elemente
+    
+//hierunter audio api elemente
+
     sample1 = new Audio("sounds/sample1.wav"),
     sample2 = new Audio("sounds/sample2.wav"),
     sample3 = new Audio("sounds/sample3.wav"),
@@ -73,8 +53,6 @@ var context = new AudioContext(),
     increaseVolueEffectTwo = 5,
     increaseVolueEffectThree = 5,
 
-    
-
     sliders = document.getElementsByClassName("slider"),
     effectButtons = document.getElementsByClassName("effectButton"),
     playStopButtons = document.getElementsByClassName("playStopButton"),
@@ -96,11 +74,6 @@ var context = new AudioContext(),
     
     playStopActivatedAry = [];
 
-//    submitButton = document.getElementById("submitBtn"),
-//    selectList =document.getElementById("selectList"), 
-//  valueFreqMin = document.getElementById("frequMin"),
-//  valueFreqMax = document.getElementById("frequMax"); 
-
     activatedModes = [];
     modeOneIsOn = false;
     modeTwoIsOn = false;
@@ -121,23 +94,18 @@ var context = new AudioContext(),
     waveShaper1.connect(filter12);
     filter12.connect(filter1);
     filter1.connect(context.destination);
-    //stereoPanner1.connect(context.destination);
 
     stream2.connect(gain2);
     gain2.connect(waveShaper2);
     waveShaper2.connect(filter22);
     filter22.connect(filter2);
     filter2.connect(context.destination);
-    //stereoPanner1.connect(context.destination);
 
     stream3.connect(gain3);
     gain3.connect(waveShaper3);
     waveShaper3.connect(filter32);
     filter32.connect(filter3);
     filter3.connect(context.destination);
-    //stereoPanner1.connect(context.destination);
-
-
 
     request.open('GET', "sounds/sample1.wav");
     request.responseType = 'arraybuffer';
@@ -148,8 +116,7 @@ var context = new AudioContext(),
     
     streamIntervall = setInterval(streamintervallFunction,5);
 
-
-    // WIP FINGER WEG buffer node stuff
+    // buffer node stuff
     function getData(i) {
         var request = new XMLHttpRequest();
         request.open('GET',  "sounds/sample/" + (i + 1) + ".wav", true);
@@ -169,43 +136,21 @@ var context = new AudioContext(),
 for (var i = 0; i < sliders.length; i++) {
     sliders[i].addEventListener("mousemove", changeParameter);
 }
-/* DropDownMenü */
-/*
-selectList.addEventListener("change", function() {
-    var name = selectList.options[selectList.selectedIndex].value;
-//    document.getElementById("selectedListOutput").innerHTML = selectList.options[selectList.selectedIndex].value;  // Wert aus der Liste: selectList.options[selectList.selectedIndex].value;   
-    sample1 = new Audio("sounds/" + name + ".wav");
-    stream1 = context.createMediaElementSource(sample1);
-    stream1.connect(gain1);
- //   sample1 = new Audio("sounds/sample2.wav");
-//    loadImpulseResponse(name); //Führt Funktion loadImpulseResponse mit der ausgewählten Datei aus 
-        
-}); 
-*/
 
 function changeParameter() {
 
-    //var value = document.getElementById("moveContainer");
     switch(this.id) {
         case "frequencySlider": //***** */ = ID vom Slider
-            //filter.frequency.value = this.value;
-          //  document.getElementById("frequencyOutput").innerHTML = this.value + " db"; //*** */aktueller Wert-Output vom Slider + "name"
-            //gain1.gain.setValueAtTime(this.value, context.currentTime);
             gain1.connect(waveShaper1);
             break;
         case "detuneSlider":
-            //filter.detune.value = this.value;
-          //  document.getElementById("detuneOutput").innerHTML = this.value ;
-          //  document.getElementById("detuneDivContainerOutput").innerHTML = "<br>" + this.value; 
             document.getElementById("moveContainer").style.marginTop = this.value * 5 + "%" ; //margin vom Container wird verändert  
 
             break;
         case "qSlider":
-            //filter.Q.value = this.value;
             document.getElementById("qOutput").innerHTML = this.value;
             break;
         case "gainSlider":
-            //filter.gain.value = this.value;
             document.getElementById("gainOutput").innerHTML = this.value + " dB";
             break;
     }
@@ -220,8 +165,7 @@ var buttonColor = "white";
 //---PlayStop 1 Button wird gedrückt
 playStopButtonOne.addEventListener("click", function(){ 
 
-    if (playStopActivatedAry[0]) { //Wenn aus geht
-        //clearInterval(stream1Intervall);      
+    if (playStopActivatedAry[0]) { //Wenn aus geht     
         this.innerHTML = "Off"; 
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
@@ -231,8 +175,6 @@ playStopButtonOne.addEventListener("click", function(){
         multiplikator1 -= increaseValueOnOff; //Mat: Curve
 
     } else { //Wenn an geht
-        //waveShaper1.curve = makeDistortionCurve(400);
-        //stream1Intervall = setInterval(stream1intervallFunction,500);  // War das hier auskommentiert??
         this.innerHTML = "On";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
@@ -244,7 +186,6 @@ playStopButtonOne.addEventListener("click", function(){
     }   
     playStopActivatedAry[0] = !playStopActivatedAry[0];
 });
-
 
 //---PlayStop 2 Button wird gedrückt
 playStopButtonTwo.addEventListener("click", function(){ 
@@ -281,6 +222,7 @@ playStopButtonThree.addEventListener("click", function(){
         multiplikator3 -= increaseValueOnOff;
         visualEffect(9);
         gain3.gain.setValueAtTime(0, context.currentTime);
+
     } else {
 
         this.innerHTML = "On";
@@ -294,39 +236,28 @@ playStopButtonThree.addEventListener("click", function(){
     playStopActivatedAry[2] = !playStopActivatedAry[2];
 });
 
-
-
 //**************************** Effect Buttons 1 - 9 *****************************
 
 //---Effekt 1 Button wird gedrückt
 effectModeOneButtonOne.addEventListener("click", function(){ 
 
     if (activatedModes[0]) { //Wenn aus geht
-     //sample1.pause(); 
         waveShaper1.curve = null;
         this.innerHTML = "Effect 1 off"; 
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
         visualEffect(2);
-        //multiplikator1 -= increaseVolueEffectOne; //Mat: Curve
-        
-
     } else {
-        //sample1.play();
         //Wenn an geht
         waveShaper1.curve = makeDistortionCurve(400);
         this.innerHTML = "Effect 1 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
-        //multiplikator1 += increaseVolueEffectOne; //Mat: Curve
         visualEffect(2);
-       
     }
-    
         activatedModes[0] = !activatedModes[0];
-
 });
 
 //---Effekt 2 Button wird gedrückt
@@ -338,7 +269,6 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.style.color = "white"; 
         buttonColor = "white";
         visualEffect(3);
-        //multiplikator1 -= increaseVolueEffectTwo; //Mat: Curve
         filter1.type = "allpass";
         
     } else {  //Wenn an geht       
@@ -346,11 +276,9 @@ effectModeOneButtonTwo.addEventListener("click", function() {
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow"; 
-        //multiplikator1 += increaseVolueEffectTwo; //Mat: Curve 
         visualEffect(3);
         filter1.type = "lowpass";
         filter1.frequency = 3000;
-
     };
     activatedModes[1] = !activatedModes[1];
 });
@@ -363,23 +291,15 @@ effectModeOneButtonThree.addEventListener("click", function() {
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white";
-        //filter1.detune.value = 0;
-        //multiplikator1 -= increaseVolueEffectThree; //Nat Grafik Kurve
         visualEffect(4);
-
         filter12.Q.value = 0;
-        
     } else {  //Wenn an geht       
         this.innerHTML = "Effect 3 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";  
-        //filter1.detune.value = 25;
-        //multiplikator1 += increaseVolueEffectThree; //Nati Grafik Kurve
         visualEffect(4);
-
         filter12.Q.value = 25;
-
     };
     activatedModes[2] = !activatedModes[2];
 });
@@ -388,17 +308,13 @@ effectModeOneButtonThree.addEventListener("click", function() {
 effectModeTwoButtonOne.addEventListener("click", function(){ 
 
     if (activatedModes[3]) { //Wenn aus geht
- 
         this.innerHTML = "Effect 1 off"; 
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
         buttonColor = "white"; 
         multiplikator2 -= increaseVolueEffectOne; //Nat Grafik Kurve
         waveShaper2.curve = null;
-
     } else {
-        //Wenn an geht
-   
         this.innerHTML = "Effect 1 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
@@ -406,7 +322,6 @@ effectModeTwoButtonOne.addEventListener("click", function(){
         multiplikator2 += increaseVolueEffectOne; //Nat Grafik Kurve
         waveShaper2.curve = makeDistortionCurve(400);
     }
-    
         activatedModes[3] = !activatedModes[3];
 
 });
@@ -420,17 +335,12 @@ effectModeTwoButtonTwo.addEventListener("click", function() {
         this.style.color = "white"; 
         buttonColor = "white"; 
         visualEffect(7);
-        //multiplikator2 -= increaseVolueEffectTwo; //Nat Grafik Kurve
         filter2.type = "allpass";
-       
-
     } else { //Wenn an geht
-   
         this.innerHTML = "Effect 2 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
         buttonColor = "yellow";
-        //multiplikator2 += increaseVolueEffectTwo; 
         visualEffect(7);
         filter2.type = "highpass";
         filter2.frequency = 3000;
@@ -447,8 +357,7 @@ effectModeTwoButtonThree.addEventListener("click", function() {
         this.style.color = "white"; 
         buttonColor = "white";
         visualEffect(8);
-        filter22.Q.value = 0;
-                                                               
+        filter22.Q.value = 0;                                                   
     } else {  //Wenn an geht       
         this.innerHTML = "Effect 3 on";
         this.style.backgroundColor = "green";
@@ -464,7 +373,6 @@ effectModeTwoButtonThree.addEventListener("click", function() {
 effectModeThreeButtonOne.addEventListener("click", function(){ 
 
     if (activatedModes[6]) { //Wenn aus geht
-    
         this.innerHTML = "Effect 1 off"; 
         this.style.backgroundColor = "grey";
         this.style.color = "white"; 
@@ -473,7 +381,6 @@ effectModeThreeButtonOne.addEventListener("click", function(){
         visualEffect(10);
         waveShaper3.curve = null;       
     } else {   //Wenn an geht
-        
         this.innerHTML = "Effect 1 on";
         this.style.backgroundColor = "green";
         this.style.color = "yellow";  
@@ -483,7 +390,6 @@ effectModeThreeButtonOne.addEventListener("click", function(){
         waveShaper3.curve = makeDistortionCurve(400);
     }
         activatedModes[6] = !activatedModes[6];
-
 });
 
 //---Effekt 8 Button wird gedrückt (3 - 2)
@@ -496,7 +402,6 @@ effectModeThreeButtonTwo.addEventListener("click", function() {
         buttonColor = "white";   
         visualEffect(11);
         filter3.type = "allpass";
-        
     } else {  //Wenn an geht  
 
         this.innerHTML = "Effect 2 on";
@@ -504,7 +409,6 @@ effectModeThreeButtonTwo.addEventListener("click", function() {
         this.style.color = "yellow";  
         buttonColor = "yellow";  
         visualEffect(11);
-
         filter3.type = "lowpass";
         filter3.frequency = 3000;
     };
@@ -521,7 +425,6 @@ effectModeThreeButtonThree.addEventListener("click", function() {
         buttonColor = "white";
         visualEffect(12);
         filter32.Q.value = 0;
-
     } else {  //Wenn an geht  
 
         this.innerHTML = "Effect 3 on";
@@ -568,136 +471,16 @@ function clickOut(){
          
 };
 
-/* //Nat: Wird noch überarbeitet, Hover effekte
-effectModeOneButtonOne.addEventListener("mousedown", function() {  //active
-   
-    this.style.backgroundColor = "#689c68";  
-});
-
-effectModeOneButtonOne.addEventListener("mouseover", clickHover);  //hover
-  
-
-function clickHover(){
-    if(!effectModeOneButtonOne.disabled){
-        effectModeOneButtonOne.style.color = "white";
-    }else{
-        effectModeOneButtonOne.style.color = "#b4f8c0";
-    };
-};
-
-effectModeOneButtonOne.addEventListener("mouseout", function() {  //mouse out
-
-     this.style.color = buttonColor;
-
-});
- */
-
-
-
-
-// Funktion wird später ausgebaut
-/*sample1.addEventListener("ended", function () { //[Nati: function neu einzeln machen und weiter oben erneut aufrufen]
-    stream1isPlaying = false;
-    effectModeOneButtonOne.innerHTML = "Play";
-}); 
-*/
-
-
-
-//Submit Button
-/*
-submitButton.addEventListener("click", function() {
-    document.getElementById("frequencySlider").min = valueFreqMin.value;
-    document.getElementById("frequencySlider").max = valueFreqMax.value;
-}) */
-
-//DANIEL TEIL -------------------------------------------------------------------------------------------
+//  --------------- Modifcator Sound Effects --------------------
 
 function streamintervallFunction(){
-    //getData(1);
-    //SourceBuffers[1].start(0);
     if((sample1.paused && sample2.paused && sample3.paused)){
         sample1.play();
         sample2.play();
         sample3.play();
-        if(playStopActivatedAry[0]){
-            
-            if(activatedModes[0]){
-                /*
-                mode1changer1 += 100;
-                if(mode1changer1 > 800){
-                    mode1changer1 = 200;
-                }
-                waveShaper1.curve = makeDistortionCurve(mode1changer1);
-                */
-            }
-            if(activatedModes[1]){
-                //possible stuff...
-            }
-            if(activatedModes[2]){
-                
-             }
-        }
-    
-        if(playStopActivatedAry[1]){
-            
-            if(activatedModes[3]){
-                mode1changer2 += 100;
-                if(mode1changer2 > 800){
-                    mode1changer2 = 200;
-                }
-                waveShaper2.curve = makeDistortionCurve(mode1changer2);
-            }
-            if(activatedModes[4]){
-                //possible stuff...
-            }
-            if(activatedModes[5]){
-                //mode3changer1 = Math.random()*100;
-                //gain1.value(mode3changer1);
-            }
-        }
-    
-        if(playStopActivatedAry[2]){
-            
-            if(activatedModes[6]){
-                mode1changer3 += 100;
-                if(mode1changer3 > 800){
-                    mode1changer3 = 200;
-                }
-                waveShaper3.curve = makeDistortionCurve(mode1changer3);
-            }
-            if(activatedModes[7]){
-                //possible stuff...
-            }
-            if(activatedModes[8]){
-                //mode3changer1 = Math.random()*100;
-                //gain1.value(mode3changer1);
-            }
-        }
-
     }
-
-
-    //Alternative hier
-    //playSound(1);
-    /*
-    var undecodedAudio = request.response;
-    context.decodeAudioData(undecodedAudio, function (buffer){
-        var sourceBuffer = context.createBufferSource();
-        sourceBuffer.buffer = buffer;
-        sourceBuffer.connect(context.destination);
-        sourceBuffer.start(context.currentTime);
-    });
-
-    request.send();
-    */
 };
-
 function makeDistortionCurve(amount) {
-    //var real = new Float32Array([0,0,1,0,1]);
-    //var imag = new Float32Array(real.length);
-    //var curve = context.createPeriodicWave(real,imag);
-    
     var k = typeof amount === 'number' ? amount : 50,
       n_samples = 5,
       curve = new Float32Array(n_samples),
@@ -710,33 +493,11 @@ function makeDistortionCurve(amount) {
 
       visualTestCurve = curve[i]; //[Nati: Wert für Curve]
       
-    }
-    
-
-    
+    }  
     return curve;
   };
 
-/*
-function playSounds(i){
-    getData(i);
-    sourceBuffers[i].start(0);
-}
-
-function playSounds(buffer, time) {
-    var source = context.createBufferSource();
-    source.buffer = buffer;
-    source.connect(context.destination);
-    source.start(time);
-}
-*/
-
-
-
-
-/**Nati Teil: ***********************************************  Visual Effects ***********************/
-
-
+/**Nati Teil: *************************  Visual Effects ***********************/
 
 /* CANVAS */
 var radiusIncrease = 2;
@@ -813,8 +574,6 @@ function visualEffect(numberEffect){
             break;
     }
    
-
-
 }
 
 window.onload = function(){
@@ -834,33 +593,17 @@ window.onload = function(){
     var curveCos;
     var radius = 4;
     var radiusW = 4;
-
-    
-
-   // var radiusNew = 4 +multiplikator2;
-    
-    
+   
     var dottedSignValue = 15;
-    
-
-    
-
 
     setInterval(function(){
        
         posX += plusMinus;
-        //posY += 1;
         curveCos = (Math.cos(posX * 0.1));
 
         if (posX >= 480 || posX <= 20){
             plusMinus *= -1;
         };
-
-    
-
-          
-    // multi = ((visualTestCurve*100000 - 34500)/100); //~ 6.5
-    //    document.getElementById("moveCycle").innerHTML = curveCos + " pos: " + posX + "<br> curvenwert: " + visualTestCurve + "<br>Beispielwerte: " + 3.5*(Math.cos(0 )) + "<br>Jetziger wert: " + curveCos + "<br>multiplikator: " + multiplikator1; 
 
         c.fillStyle = "rgba(0,0,0,0.05)"; //Bildschirm füllen
         c.fillRect(0,0, canvas.width, canvas.height); //Bildschirm füllen
@@ -902,7 +645,6 @@ window.onload = function(){
             
         }
 
-
         if(effectThreeActiveBlue){
 
             rectSize += radiusBlinkBlue;
@@ -916,9 +658,6 @@ window.onload = function(){
             rectSize = 15 + radiusIncreaseBlue;
            
         }
-
-
-       
 
         if (!effectTwoActive){ //Fügt die drei Kugeln wieder zu einer zusammen
 
@@ -1020,7 +759,7 @@ window.onload = function(){
             c.fill(); 
         }/***************************************** */
         
-        if (onOffEffectBlue){
+        if (onOffEffectBlue){ // Blauer Quadrat
 
             if (splitRect < 10){
                 splitRect += 0.2;
@@ -1040,7 +779,7 @@ window.onload = function(){
                 c.fillStyle = "blue";
                 c.fillRect(posX-(rectSize/2) -splitRect, curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2);               
             }
-            else {
+            else { // Erstellt blauen Rand
 
                 c.strokeStyle = "blue";
                 c.strokeRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2) -splitRect, rectSize/2 + multiplikator2 , (rectSize/2) + multiplikator2); // x, y, x-weidth, y-lenght 
@@ -1104,24 +843,9 @@ window.onload = function(){
                 c.strokeRect(posX-(rectSize/2) , curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2);
 
                 }
-            }
-            
-    
-           
-
-          
-      
-            
+            }     
         }       
-/*
-        c.fillStyle = "blue";
-        c.fillRect(posX-(rectSize/2), curveCos*multiplikator2 +posBlue - (rectSize/2), rectSize + multiplikator2 , rectSize + multiplikator2); // x, y, x-weidth, y-lenght 
-*/
- //       document.getElementById("infoText").innerHTML = "<br> multiplikator1 * cos + 125: "  + curveCos*multiplikator1 +125  + "<br> radiusRed: " + multiplikator1 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100) +  "<br> multiplikator3 * cos + 125: " + curveCos*multiplikator3 +125  + "<br> radiusRed: " + multiplikator3  + "<br> multiplikator2 * cos + 125: " + curveCos*multiplikator2 +125  + "<br> radiusBlue: " + multiplikator2 + "<br> visTest Curve: " + ((visualTestCurve*100000 - 34500)/100); //TEST NATI
-
     }, 10);
-    
-
 };
 
    

@@ -15,9 +15,7 @@ html, body {
     height: 350px;
     overflow: auto;
     margin-left:5%;
-    
 }
-
 
 .playStopButton {
     border-radius: 5px 60px 60px 5px;
@@ -47,9 +45,7 @@ background-color:#689c68;
     width:30%;
     margin-left: -10;
     margin-right: 10px;
-    padding: 7px;
-    
-
+    padding: 7px;  
 }
 
 #effectButtonOne, #effectTwoButtonOne, #effectThreeButtonOne{
@@ -70,8 +66,6 @@ div {
     font-size: 1.2em;
 }
 
-
-/*Kommentar*/
 #controllContainer {
     position: fixed;
     margin-left: 50%;
@@ -79,8 +73,7 @@ div {
     height: 100%;
     width: 50%;
     overflow: auto;
-    float: right;
-    
+    float: right;   
 }
 
 .samplesContainer {
@@ -101,7 +94,6 @@ div {
     background: #c0c7ff
 }
 
-
 .effectButtons {
 
     font-size: 1.0em;
@@ -116,7 +108,6 @@ div {
     border-style: solid;
     border-color: #b98393;
     margin:10px;
-
 }
 
 #musificator{
